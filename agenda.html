@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cel-etiene - Programa tu visita</title>
+  <link rel="stylesheet" href="agenda.css">
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="title">Cel-etiene</div>
+      </div>
+
+      
+    </header>
+
+    <!-- menu -->
+    <main class="main">
+
+      <!-- navegacion -->
+      <div class="nav-links">
+        <a href="#">Inició</a>
+        <a href="#">Servicio</a>
+        <a href="#">Catálogo</a>
+        <a href="#">Sobre nosotros</a>
+      </div>
+
+      <div class="content">
+
+        <!-- calendario-->
+        <section class="calendar-section">
+          <p class="section-title">Selecciona fecha de visita</p>
+          <div class="calendar-box">
+            <div class="calendar-header">
+              <button>Today</button>
+              <button>Last 8 days</button>
+              <button>Last month</button>
+            </div>
+
+            <div class="calendar-grid">
+              <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+              <!-- datos -->
+              <div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+              <div></div><div class="active">14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div>
+            </div>
+
+            <div class="calendar-actions">
+              <button class="clear">Clear</button>
+              <button class="apply">Apply</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Mapa -->
+        <section class="map-section">
+          <p class="section-title">Para mas preciso indique su ubicacion</p>
+          <div class="map-box">
+            <img src="imagenes/mapa.jpg" alt="Mapa ubicación">
+          </div>
+        </section>
+
+        <!-- formulario  -->
+        <section class="form-section">
+          <label>Nombre <span>(Persona que recibe la visita)</span></label>
+          <input type="text">
+
+          <label>Dirección</label>
+          <input type="text">
+
+          <button class="primary-btn">Programa tú visita</button>
+        </section>
+
+      </div>
+
+      <button class="logout">Cerrar sesion</button>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+          <div class="circle">C</div>
+          <div>
+            <div>Todos los derechos reservados</div>
+            <a href="#">Política de privacidad</a>
+          </div>
+        </div>
+
+        <div class="social">
+          <button class="icon-btn">F</button>
+          <button class="icon-btn">I</button>
+          <button class="icon-btn">W</button>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

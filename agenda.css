@@ -1,0 +1,259 @@
+:root{
+  --bg: #6f7f99;
+  --panel: #5e5551;
+  --text: #ffffff;
+  --btn: rgba(142,160,191,.6);
+  --btn-hover: rgba(142,160,191,.8);
+  --light: #e5e5e5;
+  --shadow: 0 14px 30px rgba(0,0,0,.25);
+  --radius: 18px;
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.page{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.topbar{
+  height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  background: rgba(0,0,0,.08);
+}
+
+.brand{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo{
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #dff1ff, #f7c0ff 55%, #9bd3ff);
+  display: grid;
+  place-items: center;
+}
+
+.title{
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.search-btn{
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+/* MENU */
+.main{
+  flex: 1;
+  background: var(--panel);
+  padding: 30px;
+  position: relative;
+}
+
+.nav-links{
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+
+.nav-links a{
+  color: rgba(255,255,255,.85);
+  text-decoration: none;
+}
+
+.content{
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+/* CALENDARIO */
+.calendar-section{
+  width: 320px;
+}
+
+.calendar-box{
+  background: var(--light);
+  border-radius: var(--radius);
+  padding: 15px;
+  color: #333;
+}
+
+.calendar-header{
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.calendar-header button{
+  flex: 1;
+  font-size: 10px;
+}
+
+.calendar-grid{
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  gap: 5px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.calendar-grid div{
+  padding: 6px 0;
+}
+
+.calendar-grid .active{
+  background: orange;
+  border-radius: 50%;
+  color: white;
+}
+
+.calendar-actions{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.calendar-actions button{
+  font-size: 11px;
+}
+
+/* MAPA */
+.map-section{
+  width: 420px;
+}
+
+.map-box{
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.map-box img{
+  width: 100%;
+  display: block;
+}
+
+/* FORMULARIO */
+.form-section{
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-section input{
+  height: 32px;
+  border-radius: 5px;
+  border: none;
+  padding: 5px 10px;
+}
+
+.primary-btn{
+  margin-top: 10px;
+  height: 35px;
+  border: none;
+  background: var(--btn);
+  color: white;
+  cursor: pointer;
+}
+
+.primary-btn:hover{
+  background: var(--btn-hover);
+}
+
+/* LOGOUT */
+.logout{
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  background: rgba(0,0,0,.2);
+  border: none;
+  padding: 5px 15px;
+  font-size: 12px;
+  color: white;
+  cursor: pointer;
+}
+
+/* FOOTER */
+.footer{
+  height: 100px;
+  background: rgba(0,0,0,.08);
+  display: flex;
+  align-items: flex-end;
+  padding: 15px 30px;
+}
+
+.footer-inner{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.circle{
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid white;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+}
+
+.social{
+  display: flex;
+  gap: 10px;
+}
+
+.icon-btn{
+  width: 35px;
+  height: 35px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,.2);
+  color: white;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media(max-width: 1000px){
+  .content{
+    flex-direction: column;
+  }
+
+  .calendar-section,
+  .map-section,
+  .form-section{
+    width: 100%;
+  }
+
+  .logout{
+    position: static;
+    margin-top: 20px;
+  }
+}
