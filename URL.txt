@@ -1,0 +1,8 @@
+LOGIN
+
+http://localhost/cel_etiene/inicio.html
+
+
+REGISTRO
+
+http://localhost/cel_etiene/registro.html

@@ -3,53 +3,61 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cel-etiene - Inicio</title>
-  <link rel="stylesheet" href="menu.css" />
+  <title>Cel-etiene - Login</title>
+  <link rel="stylesheet" href="inicio.css" />
 </head>
 
 <body>
   <div class="page">
-    <!-- HEADER -->
     <header class="topbar">
       <div class="brand">
         <div class="title">Cel-etiene</div>
       </div>
 
-      
     </header>
 
-
     <main class="main">
-      <div class="nav-links" aria-label="Navegación">
-        <a href="#" class="nav-link">Inició</a>
-        <a href="#" class="nav-link">Servicios</a>
-        <a href="#" class="nav-link">Catálogo</a>
-        <a href="#" class="nav-link">Sobre nosotros</a>
-      </div>
-
       <div class="content">
-     
+       
+        <section class="login" aria-label="Inicio de sesión">
+          <h2 class="login-title">Inicio sesion</h2>
+
+          <form action="login.php" method="POST">
+            <div class="field">
+              <label class="label" for="user">Usuario</label>
+              <input id="user" type="text" name="user" required /> 
+              <span class="hint">Usuario no encontrado</span>
+            </div>
+
+            <div class="field">
+              <label class="label" for="pass">Contraseña</label>
+              <input id="pass" type="password" name="pass" required />
+              <span class="hint hint-danger">Contraseña invalida</span>
+            </div>
+
+            <div class="helper">
+              <a href="#">Recuperar contraseña</a>
+            </div>
+
+            <div class="register">
+              Si no tienes cuenta regístrate
+              <a href="registro.html">AQUÍ</a>
+            </div>
+
+            <button class="btn" type="submit">Iniciar sesión</button> 
+          </form>
+        </section>
+
+        <!-- parte imagen-->
         <section class="hero" aria-label="Imagen">
           <div class="hero-card">
-            <img src="imagenes/imagen1.jpg" alt="Reparación de dispositivo" />
+            <img src="imagenes/imagen2.jpeg" alt="Reparación de dispositivo" />
           </div>
         </section>
-
-
-        <section class="actions" aria-label="Acciones">
-          <button class="action-btn" type="button">Programa tú visita</button>
-          <button class="action-btn" type="button">Seguimiento de tú producto</button>
-          <button class="action-btn" type="button">Quejas y reclamos</button>
-        </section>
       </div>
-
-      <button class="logout" type="button" onclick="window.location.href='/cel-etiene/Cel-etiene HTML - CSS/inicio.html'">
-  Cerrar sesión
-</button>
     </main>
 
-
-    <footer class="footer"> 
+    <footer class="footer">
       <div class="footer-inner">
         <div class="copyright">
           <div class="circle">C</div>
@@ -88,5 +96,23 @@
       </div>
     </footer>
   </div>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const error = params.get('error');
+
+  const hintUser = document.getElementById('user').parentElement.querySelector('.hint');
+  const hintPass = document.getElementById('pass').parentElement.querySelector('.hint');
+
+  hintUser.style.display = 'none';
+  hintPass.style.display = 'none';
+
+  if (error === 'usuario_no_encontrado' || error === 'campos_vacios') {
+    hintUser.style.display = 'block';
+  }
+
+  if (error === 'contrasena_incorrecta') {
+    hintPass.style.display = 'block';
+  }
+</script>
 </body>
 </html>

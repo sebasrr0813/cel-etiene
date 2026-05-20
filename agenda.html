@@ -15,20 +15,18 @@
       <div class="brand">
         <div class="title">Cel-etiene</div>
       </div>
-
-      
     </header>
 
     <!-- menu -->
     <main class="main">
 
       <!-- navegacion -->
-      <div class="nav-links">
-        <a href="#">Inició</a>
-        <a href="#">Servicio</a>
-        <a href="#">Catálogo</a>
-        <a href="#">Sobre nosotros</a>
-      </div>
+     <div class="nav-links">
+       <a href="menu.php">Inició</a>
+       <a href="servicio.html">Servicio</a>
+       <a href="catalogo.html">Catálogo</a>
+       <a href="#">Sobre nosotros</a>
+     </div>
 
       <div class="content">
 
@@ -73,11 +71,11 @@
           <input type="text">
 
           <button class="primary-btn">Programa tú visita</button>
+            <p id="msg-agenda" style="display:none; color:#e74c3c; font-size:12px; margin-top:6px;"> Debes ingresar el nombre y la dirección para programar la visita.</p>
         </section>
-
       </div>
 
-      <button class="logout">Cerrar sesion</button>
+      <button class="logout" onclick="window.location.href='logout.php'">Cerrar sesion</button>
     </main>
 
     <!-- FOOTER -->
@@ -98,7 +96,20 @@
         </div>
       </div>
     </footer>
-
   </div>
+  <script>
+  document.querySelector('.primary-btn').addEventListener('click', function() {
+    const nombre = document.querySelector('input[type="text"]:nth-of-type(1)').value.trim();
+    const direccion = document.querySelector('input[type="text"]:nth-of-type(2)').value.trim();
+    const mensaje = document.getElementById('msg-agenda');
+
+    if (nombre === '' || direccion === '') {
+      mensaje.style.display = 'block';
+    } else {
+      mensaje.style.display = 'none';
+      alert('¡Visita programada exitosamente!');
+    }
+  });
+</script>
 </body>
 </html>

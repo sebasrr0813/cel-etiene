@@ -137,16 +137,7 @@ input{
   box-shadow: 0 2px 0 rgba(0,0,0,.06);
 }
 
-.hint{
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translate(110%, -50%);
-  font-size: 11px;
-  white-space: nowrap;
-  color: var(--danger);
-  opacity: .9;
-}
+
 
 .hint-danger{
   color: var(--danger);
@@ -314,11 +305,6 @@ input{
   .hero{ width: 100%; }
   .hero-card{ width: 100%; }
   .input-wrap{ width: 100%; }
-  .hint{
-    transform: translate(0, -50%);
-    right: 10px;
-    top: 50%;
-  }
 }
 
 @media (max-width: 520px){
@@ -326,4 +312,18 @@ input{
   .main{ padding: 28px 16px; }
   .footer{ padding: 12px 16px; }
   .title{ font-size: 28px; }
+}
+
+.hint{
+  font-size: 11px;
+  white-space: nowrap;
+  color: var(--danger);
+  opacity: .9;
+  margin-top: 4px;
+  display: none;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
 }

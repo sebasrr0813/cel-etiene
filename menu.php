@@ -1,78 +1,55 @@
+<?php
+session_start();
+if (!isset($_SESSION["user_id"])) {
+    header("Location: inicio.html");
+    exit();
+}
+?>
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cel-etiene - Registro</title>
-  <link rel="stylesheet" href="registro.css" />
+  <title>Cel-etiene - Inicio</title>
+  <link rel="stylesheet" href="menu.css" />
 </head>
 
 <body>
   <div class="page">
-    <!-- HEADER -->
     <header class="topbar">
       <div class="brand">
-  
         <div class="title">Cel-etiene</div>
       </div>
-
     </header>
 
-
     <main class="main">
+      <div class="nav-links" aria-label="Navegación">
+        <a href="menu.php" class="nav-link">Inició</a>
+        <a href="servicio.html" class="nav-link">Servicios</a>
+        <a href="catalogo.html" class="nav-link">Catálogo</a>
+        <a href="#" class="nav-link">Sobre nosotros</a>
+     </div>
+
       <div class="content">
-
-        <section class="register" aria-label="Registro de usuario">
-          <h2 class="register-title">Registro de usuario</h2>
-
-          <form action="../registro.php" method="POST">
-            <div class="field">
-              <label class="label" for="nombres">Nombres</label>
-              <input id="nombres" type="text" name="nombres" required />
-            </div>
-
-            <div class="field">
-              <label class="label" for="apellidos">Apellidos</label>
-              <input id="apellidos" type="text" name="apellidos" required />
-            </div>
-
-            <div class="field">
-              <label class="label" for="cedula">Cédula</label>
-              <input id="cedula" type="text" name="cedula" required />
-            </div>
-
-            <div class="field">
-              <label class="label" for="correo">Correo electrónico</label>
-              <input id="correo" type="email" name="correo" required />
-            </div>
-
-            <div class="field">
-              <label class="label" for="fecha">Fecha de nacimiento</label>
-              <input id="fecha" type="date" name="fecha" />
-            </div>
-
-            <div class="field">
-              <label class="label" for="pass">Contraseña</label>
-              <input id="pass" type="password" name="pass" required />
-            </div>
-
-            <div class="actions">
-              <button class="btn" type="submit">Registrar</button>
-              <button class="btn" type="button" onclick="window.location.href='inicio.html'">Volver</button>
-            </div>
-          </form>
-        </section>
-
         <section class="hero" aria-label="Imagen">
           <div class="hero-card">
-            <img src="imagenes/imagen3.avif" alt="Reparación de dispositivo" />
+            <img src="imagenes/imagen1.jpg" alt="Reparación de dispositivo" />
           </div>
         </section>
+
+       <section class="actions" aria-label="Acciones">
+         <button class="action-btn" type="button" onclick="window.location.href='agenda.html'">Programa tú visita</button>
+         <button class="action-btn" type="button">Seguimiento de tú producto</button>
+         <button class="action-btn" type="button">Quejas y reclamos</button>
+       </section>
       </div>
+
+      <button class="logout" type="button" onclick="window.location.href='logout.php'">
+        Cerrar sesión
+      </button>
     </main>
 
-
-    <footer class="footer">
+    <footer class="footer"> 
       <div class="footer-inner">
         <div class="copyright">
           <div class="circle">C</div>

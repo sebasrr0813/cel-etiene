@@ -3,59 +3,74 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cel-etiene - Login</title>
-  <link rel="stylesheet" href="inicio.css" />
+  <title>Cel-etiene - Registro</title>
+  <link rel="stylesheet" href="registro.css" />
 </head>
 
 <body>
   <div class="page">
+    <!-- HEADER -->
     <header class="topbar">
       <div class="brand">
+  
         <div class="title">Cel-etiene</div>
       </div>
 
     </header>
 
+
     <main class="main">
       <div class="content">
-       
-        <section class="login" aria-label="Inicio de sesión">
-          <h2 class="login-title">Inicio sesion</h2>
 
-          <form action="../login.php" method="POST">
+        <section class="register" aria-label="Registro de usuario">
+          <h2 class="register-title">Registro de usuario</h2>
+
+          <form action="/cel_etiene/registro.php" method="POST">
             <div class="field">
-              <label class="label" for="user">Usuario</label>
-              <input id="user" type="text" name="user" required /> 
-              <span class="hint">Usuario no encontrado</span>
+              <label class="label" for="nombres">Nombres</label>
+              <input id="nombres" type="text" name="nombres" required />
+            </div>
+
+            <div class="field">
+              <label class="label" for="apellidos">Apellidos</label>
+              <input id="apellidos" type="text" name="apellidos" required />
+            </div>
+
+            <div class="field">
+              <label class="label" for="cedula">Cédula</label>
+              <input id="cedula" type="text" name="cedula" required />
+            </div>
+
+            <div class="field">
+              <label class="label" for="correo">Correo electrónico</label>
+              <input id="correo" type="email" name="correo" required />
+            </div>
+
+            <div class="field">
+              <label class="label" for="fecha">Fecha de nacimiento</label>
+              <input id="fecha" type="date" name="fecha" />
             </div>
 
             <div class="field">
               <label class="label" for="pass">Contraseña</label>
               <input id="pass" type="password" name="pass" required />
-              <span class="hint hint-danger">Contraseña invalida</span>
             </div>
 
-            <div class="helper">
-              <a href="#">Recuperar contraseña</a>
+            <div class="actions">
+              <button class="btn" type="submit">Registrar</button>
+              <button class="btn" type="button" onclick="window.location.href='inicio.html'">Volver</button>
             </div>
-
-            <div class="register">
-              Si no tienes cuenta regístrate
-              <a href="registro.html">AQUÍ</a>
-            </div>
-
-            <button class="btn" type="submit">Iniciar sesión</button> 
           </form>
         </section>
 
-        <!-- parte imagen-->
         <section class="hero" aria-label="Imagen">
           <div class="hero-card">
-            <img src="imagenes/imagen2.jpeg" alt="Reparación de dispositivo" />
+            <img src="imagenes/imagen3.avif" alt="Reparación de dispositivo" />
           </div>
         </section>
       </div>
     </main>
+
 
     <footer class="footer">
       <div class="footer-inner">
