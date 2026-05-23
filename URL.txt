@@ -1,8 +1,8 @@
-LOGIN
+Inicio
 
-http://localhost/cel_etiene/inicio.html
+http://localhost/cel_etiene/inicio.php
 
 
 REGISTRO
 
-http://localhost/cel_etiene/registro.html
+http://localhost/cel_etiene/registro.php

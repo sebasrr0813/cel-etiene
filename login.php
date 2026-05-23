@@ -1,50 +1,87 @@
 <?php
-require_once 'db_conexion.php';
+
+ob_start();
+
 session_start();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    if (empty($_POST["user"]) || empty($_POST["pass"])) {
-        header("Location: inicio.html?error=campos_vacios");
-        exit();
-    }
+include("db_conexion.php");
 
-    $usuario_input = $_POST['user'];
-    $password_input = $_POST['pass'];
+if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-    $sql = "SELECT id, nombres, password, rol FROM usuarios WHERE correo = ? OR cedula = ?";
-    $stmt = $conn->prepare($sql);
+    $user = trim($_POST['user']);
+    $pass = trim($_POST['pass']);
 
-    if ($stmt === false) {
-        error_log("Error al preparar la consulta de login: " . $conn->error);
-        header("Location: inicio.html?error=db_error");
-        exit();
-    }
+    $sql = "SELECT * FROM usuarios
+    WHERE correo = ?";
 
-    $stmt->bind_param("ss", $usuario_input, $usuario_input);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt = mysqli_prepare(
+        $conexion,
+        $sql
+    );
 
-    if ($result->num_rows === 1) {
-        $user_data = $result->fetch_assoc();
-        
-        if (password_verify($password_input, $user_data["password"])) {
-            $_SESSION["user_id"] = $user_data["id"];
-            $_SESSION["user_name"] = $user_data["nombres"];
-            $_SESSION["user_role"] = $user_data["rol"];
+    mysqli_stmt_bind_param(
+        $stmt,
+        "s",
+        $user
+    );
+
+    mysqli_stmt_execute($stmt);
+
+    $resultado =
+    mysqli_stmt_get_result($stmt);
+
+    // =========================
+    // USER EXISTS
+    // =========================
+
+    if(mysqli_num_rows($resultado) > 0){
+
+        $fila = mysqli_fetch_assoc(
+            $resultado
+        );
+
+        // =========================
+        // PASSWORD VALID
+        // =========================
+
+        if(
+            password_verify(
+                $pass,
+                $fila['password']
+            )
+        ){
+
+            $_SESSION['usuario'] =
+            $fila['correo'];
+
+            $_SESSION['rol'] =
+            $fila['rol'];
 
             header("Location: menu.php");
             exit();
-        } else {
-            header("Location: inicio.html?error=contrasena_incorrecta");
+
+        }else{
+
+            header(
+            "Location: inicio.php?error=password"
+            );
+
             exit();
+
         }
-    } else {
-        header("Location: inicio.html?error=usuario_no_encontrado");
+
+    }else{
+
+        header(
+        "Location: inicio.php?error=user"
+        );
+
         exit();
+
     }
 
-    $stmt->close();
-    $conn->close();
 }
+
+ob_end_flush();
+
 ?>

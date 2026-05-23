@@ -1,6 +1,13 @@
 <?php
+
 session_start();
+
+session_unset();
+
 session_destroy();
-header("Location: inicio.html");
+
+header("Location: inicio.php");
+
 exit();
+
 ?>
