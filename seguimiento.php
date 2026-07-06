@@ -2,24 +2,176 @@
 
 session_start();
 
+include("db_conexion.php");
+
 if(!isset($_SESSION['usuario'])){
 
     header("Location: inicio.php");
     exit();
 
 }
+/* VARIABLES */
 
-/* DATOS DEMO */
+$codigo = "";
 
-$codigo = "CEL-809D7E8D";
+$estado = "";
 
-$estado = "En reparación";
+$progreso = 0;
 
-$progreso = 65;
+$tecnico = "";
 
-$equipo = "iPhone 17 Pro Max";
+$descripcion = "";
 
-$tecnico = "Carlos Ramírez";
+$servicios = "";
+
+$fecha = "";
+
+$hora = "";
+
+$mensaje = "";
+
+if(isset($_POST["buscar"])){
+
+    $codigo = "CEL-" . strtoupper(trim($_POST["codigo"]));
+
+    $sql = "SELECT * FROM agendamientos
+            WHERE codigo_soporte='$codigo'";
+
+    $resultado = mysqli_query($conexion,$sql);
+
+    if(mysqli_num_rows($resultado)>0){
+
+        $fila = mysqli_fetch_assoc($resultado);
+
+        $estado      = $fila["estado"];
+        $tecnico     = $fila["tecnico"];
+        $descripcion = $fila["descripcion"];
+        $servicios   = $fila["servicios"];
+        $fecha       = $fila["fecha_visita"];
+        $hora        = $fila["hora_visita"];
+
+    }else{
+
+        $mensaje = "Código de soporte no encontrado.";
+
+    }
+
+}
+
+switch($estado){
+
+    case "Pendiente":
+        $progreso = 10;
+    break;
+
+    case "Recibido":
+        $progreso = 25;
+    break;
+
+    case "Diagnóstico":
+        $progreso = 45;
+    break;
+
+    case "En reparación":
+        $progreso = 70;
+    break;
+
+    case "Pruebas":
+        $progreso = 90;
+    break;
+
+    case "Listo":
+        $progreso = 100;
+    break;
+
+    default:
+        $progreso = 0;
+
+}
+
+$paso1 = "";
+$paso2 = "";
+$paso3 = "";
+$paso4 = "";
+$paso5 = "";
+
+$linea1 = "";
+$linea2 = "";
+$linea3 = "";
+$linea4 = "";
+
+switch($estado){
+
+    case "Pendiente":
+
+        $paso1 = "active";
+
+    break;
+
+    case "Recibido":
+
+        $paso1 = "completed";
+        $paso2 = "active";
+
+        $linea1 = "active";
+
+    break;
+
+    case "Diagnóstico":
+
+        $paso1 = "completed";
+        $paso2 = "completed";
+        $paso3 = "active";
+
+        $linea1 = "active";
+        $linea2 = "active";
+
+    break;
+
+    case "En reparación":
+
+        $paso1 = "completed";
+        $paso2 = "completed";
+        $paso3 = "completed";
+        $paso4 = "active";
+
+        $linea1 = "active";
+        $linea2 = "active";
+        $linea3 = "active";
+
+    break;
+
+    case "Pruebas":
+
+        $paso1 = "completed";
+        $paso2 = "completed";
+        $paso3 = "completed";
+        $paso4 = "completed";
+        $paso5 = "active";
+
+        $linea1 = "active";
+        $linea2 = "active";
+        $linea3 = "active";
+        $linea4 = "active";
+
+    break;
+
+    case "Listo":
+
+        $paso1 = "completed";
+        $paso2 = "completed";
+        $paso3 = "completed";
+        $paso4 = "completed";
+        $paso5 = "completed";
+
+        $linea1 = "active";
+        $linea2 = "active";
+        $linea3 = "active";
+        $linea4 = "active";
+
+    break;
+
+}
 
 ?>
 
@@ -144,7 +296,54 @@ $tecnico = "Carlos Ramírez";
 
                     </p>
 
+                    <form method="POST" class="search-form">
+
+                    <label>
+
+                        Código de soporte
+
+                    </label>
+
+                    <div class="search-input">
+
+                        <span>CEL-</span>
+
+                        <input
+                            type="text"
+                            name="codigo"
+                            maxlength="8"
+                            placeholder="1DDA6507"
+                            value="<?php echo str_replace("CEL-","",$codigo); ?>"
+                            required
+                        >
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        name="buscar"
+                        class="search-btn"
+                    >
+
+                        Buscar seguimiento
+
+                    </button>
+
+                </form>
+
+                        <?php
+
+                        if($mensaje != ""){
+
+                            echo "<p class='error-msg'>$mensaje</p>";
+
+                        }
+
+                        ?>
+
                     <!-- INFO -->
+
+                    <?php if($codigo != "" && $mensaje == ""){ ?>
 
                     <div class="info-grid">
 
@@ -162,6 +361,8 @@ $tecnico = "Carlos Ramírez";
 
                             </strong>
 
+
+
                         </div>
 
                         <div class="info-box">
@@ -174,7 +375,7 @@ $tecnico = "Carlos Ramírez";
 
                             <strong>
 
-                                <?php echo $equipo; ?>
+                                <?php echo $servicios; ?>
 
                             </strong>
 
@@ -212,7 +413,25 @@ $tecnico = "Carlos Ramírez";
 
                         </div>
 
+                        <div class="info-box">
+
+                            <span>
+
+                                Descripción
+
+                            </span>
+
+                            <strong>
+
+                                <?php echo $descripcion; ?>
+
+                            </strong>
+
+                        </div>
+
                     </div>
+
+                    
 
                     <!-- PROGRESS -->
 
@@ -249,7 +468,7 @@ $tecnico = "Carlos Ramírez";
 
                     <div class="repair-steps">
 
-                        <div class="step completed">
+                        <div class="step <?php echo $paso1; ?>">
 
                             <div class="circle"></div>
 
@@ -261,9 +480,9 @@ $tecnico = "Carlos Ramírez";
 
                         </div>
 
-                        <div class="step-line active"></div>
+                        <div class="step-line <?php echo $linea1; ?>"></div>
 
-                        <div class="step completed">
+                        <div class="step <?php echo $paso2; ?>">
 
                             <div class="circle"></div>
 
@@ -275,9 +494,9 @@ $tecnico = "Carlos Ramírez";
 
                         </div>
 
-                        <div class="step-line active"></div>
+                        <div class="step-line <?php echo $linea2; ?>"></div>
 
-                        <div class="step active">
+                        <div class="step <?php echo $paso3; ?>">
 
                             <div class="circle"></div>
 
@@ -289,7 +508,7 @@ $tecnico = "Carlos Ramírez";
 
                         </div>
 
-                        <div class="step-line"></div>
+                        <div class="step-line <?php echo $linea3; ?>"></div>
 
                         <div class="step">
 
@@ -303,9 +522,9 @@ $tecnico = "Carlos Ramírez";
 
                         </div>
 
-                        <div class="step-line"></div>
+                        <div class="step-line <?php echo $linea4; ?>"></div>
 
-                        <div class="step">
+                        <div class="step <?php echo $paso5; ?>">
 
                             <div class="circle"></div>
 
@@ -329,6 +548,8 @@ $tecnico = "Carlos Ramírez";
                         Volver al menú
 
                     </button>
+
+                    <?php } ?>
 
                 </div>
 

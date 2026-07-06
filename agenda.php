@@ -19,8 +19,25 @@ if(
 $_SESSION['servicios'] =
 $_POST['servicio'] ?? [];
 
-$_SESSION['descripcion'] =
-$_POST['descripcion'] ?? '';
+$descripcion = "";
+
+if (!empty($_POST['detalle_general'])) {
+    $descripcion = $_POST['detalle_general'];
+}
+
+if (!empty($_POST['detalle_software'])) {
+    $descripcion = $_POST['detalle_software'];
+}
+
+if (!empty($_POST['detalle_hardware'])) {
+    $descripcion = $_POST['detalle_hardware'];
+}
+
+if (!empty($_POST['descripcion'])) {
+    $descripcion = $_POST['descripcion'];
+}
+
+$_SESSION['descripcion'] = $descripcion;
 
 ?>
 <!doctype html>

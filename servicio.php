@@ -197,6 +197,8 @@ if(!isset($_SESSION['usuario'])){
                             <input
                                 type="checkbox"
                                 id="otrosCheck"
+                                name="servicio[]"
+                                value="Otros"
                             >
 
                             <span>

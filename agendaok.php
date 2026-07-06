@@ -67,7 +67,9 @@ INSERT INTO agendamientos(
     nombre_cliente,
     direccion,
     telefono,
-    codigo_soporte
+    codigo_soporte,
+    estado,
+    tecnico
 
 )
 
@@ -81,8 +83,9 @@ VALUES(
     '$nombre',
     '$direccion',
     '$telefono',
-    '$codigo'
-
+    '$codigo' ,
+    'Pendiente',
+    NULL
 )
 
 ";

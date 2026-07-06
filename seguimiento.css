@@ -428,3 +428,125 @@ h2{
     background:linear-gradient(135deg,#3b82f6,#7c3aed);
     transform:translateY(-3px);
 }
+
+/*========== BUSCADOR ==========*/
+
+.search-form{
+
+    margin:35px 0 45px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.search-form label{
+
+    color:#cbd5e1;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+.search-input{
+
+    display:flex;
+
+    align-items:center;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.search-input span{
+
+    padding:18px 22px;
+
+    color:#60a5fa;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    background:rgba(59,130,246,.15);
+
+    border-right:1px solid rgba(255,255,255,.08);
+
+}
+
+.search-input input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:none;
+
+    color:white;
+
+    font-size:20px;
+
+    padding:18px;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+}
+
+.search-input input::placeholder{
+
+    color:#64748b;
+
+}
+
+.search-btn{
+
+    border:none;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.search-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.error-msg{
+
+    margin-top:15px;
+
+    text-align:center;
+
+    color:#f87171;
+
+}
