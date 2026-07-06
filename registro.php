@@ -65,7 +65,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         if(mysqli_query($conexion, $sql)){
 
-            header("Location: inicio.php");
+            header("Location: registro_exitoso.php");
             exit();
 
         }else{
@@ -233,10 +233,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="buttons">
 
               <button
-                type="submit"
-                class="btn primary"
+                  type="submit"
+                  class="btn primary"
               >
-                Registrarme
+                  Registrarme
               </button>
 
               <button

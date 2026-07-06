@@ -123,23 +123,120 @@ if(isset($_GET['error'])){
 
                 </div>
 
-                <!-- IMAGE -->
-                <section class="hero">
+               <!-- ===========================
+     SOBRE NOSOTROS
+============================ -->
 
-                    <div class="hero-card">
+<section class="about-section">
 
-                        <img
-                            src="imagenes/inicio.png"
-                            alt="Servicio técnico"
-                        >
+    <div class="about-content">
 
-                    </div>
+        <span class="about-tag">
+            SOBRE NOSOTROS
+        </span>
 
-                </section>
+        <h2>
+            Tecnología, innovación y confianza al servicio de tus dispositivos.
+        </h2>
+
+        <p>
+
+            En <strong>CEL-ETIENE</strong> somos una empresa dedicada a brindar
+            soluciones especializadas en mantenimiento, reparación y soporte
+            técnico para teléfonos móviles, tablets y otros dispositivos
+            electrónicos.
+
+        </p>
+
+        <p>
+
+            Nuestro compromiso es ofrecer un servicio seguro, transparente y
+            eficiente, utilizando herramientas tecnológicas modernas y personal
+            altamente capacitado para garantizar la satisfacción de nuestros
+            clientes.
+
+        </p>
+
+        <div class="about-grid">
+
+            <div class="about-box">
+
+                <h3>
+                    Nuestra misión
+                </h3>
+
+                <p>
+
+                    Proporcionar servicios técnicos de alta calidad mediante
+                    procesos innovadores que garanticen la reparación,
+                    mantenimiento y cuidado de los dispositivos electrónicos.
+
+                </p>
 
             </div>
 
+            <div class="about-box">
+
+                <h3>
+                    Nuestra visión
+                </h3>
+
+                <p>
+
+                    Ser reconocidos como una empresa líder en soluciones
+                    tecnológicas, destacándonos por nuestra innovación,
+                    confiabilidad y excelencia en el servicio al cliente.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="about-stats">
+
+            <div class="stat">
+
+                <h3>98%</h3>
+
+                <span>
+                    Clientes satisfechos
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <h3>24/7</h3>
+
+                <span>
+                    Atención digital
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <h3>100%</h3>
+
+                <span>
+                    Compromiso y calidad
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+            </div>
+
+            
+
         </main>
+
 
         <!-- FOOTER -->
         <footer class="footer">
