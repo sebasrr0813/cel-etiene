@@ -15,6 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $correo = $_POST['correo'];
     $fecha = $_POST['fecha'];
     $contrasena = $_POST['contrasena'];
+    $telefono = trim($_POST["telefono"]);
 
     // ENCRIPTAR PASSWORD
     $hash = password_hash(
@@ -45,6 +46,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             apellidos,
             cedula,
             correo,
+            telefono,
             password,
             fecha_nacimiento,
             rol
@@ -57,6 +59,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             '$apellidos',
             '$cedula',
             '$correo',
+            '$telefono',
             '$hash',
             '$fecha',
             'cliente'
@@ -197,6 +200,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
               />
 
             </div>
+
+            <label>
+
+                 Teléfono
+
+            </label>
+
+            <input
+
+                type="text"
+
+                name="telefono"
+
+                maxlength="20"
+
+                placeholder="Ej: 3001234567"
+
+                required
+
+            >
 
             <!-- FECHA -->
             <div class="field">

@@ -1,0 +1,404 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial,sans-serif;
+    background:#020617;
+    color:white;
+
+}
+
+.admin-container{
+
+    display:flex;
+    min-height:100vh;
+
+}
+
+.sidebar{
+
+    width:280px;
+    background:#0f172a;
+    border-right:1px solid rgba(255,255,255,.08);
+    padding:30px;
+
+}
+
+.logo{
+
+    margin-bottom:50px;
+
+}
+
+.logo h1{
+
+    color:#60a5fa;
+    margin-bottom:8px;
+
+}
+
+.logo span{
+
+    color:#94a3b8;
+    font-size:14px;
+
+}
+
+.sidebar nav{
+
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+
+}
+
+.sidebar nav a{
+
+    text-decoration:none;
+    color:white;
+    padding:15px;
+    border-radius:12px;
+    transition:.3s;
+
+}
+
+.sidebar nav a:hover{
+
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+
+}
+
+.content{
+
+    flex:1;
+    padding:50px;
+
+}
+
+.content h2{
+
+    font-size:40px;
+    margin-bottom:20px;
+
+}
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+    margin-top:40px;
+
+}
+
+.card{
+
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:18px;
+
+    padding:30px;
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 20px 40px rgba(37,99,235,.25);
+
+}
+
+.card h3{
+
+    color:#94a3b8;
+
+    margin-bottom:15px;
+
+}
+
+.card span{
+
+    font-size:42px;
+
+    color:#60a5fa;
+
+    font-weight:bold;
+
+}
+
+.tabla-agendamientos{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-top:40px;
+
+    background:#111827;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+}
+
+.tabla-agendamientos th{
+
+    background:#1e293b;
+
+    color:#60a5fa;
+
+    padding:18px;
+
+    text-align:left;
+
+}
+
+.tabla-agendamientos td{
+
+    padding:16px;
+
+    border-top:1px solid rgba(255,255,255,.06);
+
+}
+
+.tabla-agendamientos tr:hover{
+
+    background:#1f2937;
+
+}
+
+.btn-editar{
+
+    display:inline-block;
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:8px 16px;
+
+    border-radius:8px;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.btn-editar:hover{
+
+    background:#1d4ed8;
+
+}
+
+/***========== Editar agendamiento ==========*/
+
+.info-box{
+
+    background:#111827;
+
+    padding:18px;
+
+    margin-bottom:18px;
+
+    border-radius:14px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.info-box span{
+
+    display:block;
+
+    color:#94a3b8;
+
+    margin-bottom:8px;
+
+}
+
+.info-box strong{
+
+    font-size:20px;
+
+}
+
+.input-admin{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#1e293b;
+
+    color:white;
+
+    margin-top:8px;
+
+    margin-bottom:20px;
+
+}
+
+/*========== filtros ==========*/
+
+.busqueda{
+
+    display:flex;
+
+    gap:20px;
+
+    align-items:flex-end;
+
+    margin:30px 0;
+
+    flex-wrap:wrap;
+
+}
+
+.busqueda label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:bold;
+
+}
+
+.codigo-box{
+
+    display:flex;
+
+}
+
+.codigo-box span{
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:12px 15px;
+
+    border-radius:8px 0 0 8px;
+
+}
+
+.codigo-box input{
+
+    padding:12px;
+
+    width:220px;
+
+    border:none;
+
+    outline:none;
+
+    background:#1e293b;
+
+    color:white;
+
+    border-radius:0 8px 8px 0;
+
+}
+
+.busqueda select{
+
+    padding:12px;
+
+    background:#1e293b;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+}
+
+.busqueda button{
+
+    padding:12px 25px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#2563eb;
+
+    color:white;
+
+    cursor:pointer;
+
+}
+
+.busqueda button:hover{
+
+    background:#1d4ed8;
+
+}
+
+.estado{
+
+    display:inline-block;
+
+    padding:8px 14px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    color:#fff;
+
+}
+
+/* Pendiente */
+
+.pendiente{
+
+    background:#facc15;
+    color:#111827;
+
+}
+
+/* Diagnóstico */
+
+.diagnóstico{
+
+    background:#3b82f6;
+
+}
+
+/* En reparación */
+
+.en-reparación{
+
+    background:#8b5cf6;
+
+}
+
+/* Listo */
+
+.listo{
+
+    background:#22c55e;
+
+}

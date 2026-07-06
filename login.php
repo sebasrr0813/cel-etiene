@@ -51,13 +51,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             )
         ){
 
-            $_SESSION['usuario'] =
-            $fila['correo'];
+           $_SESSION['usuario'] = $fila['correo'];
 
-            $_SESSION['rol'] =
-            $fila['rol'];
+            $_SESSION['nombre'] = $fila['nombres'];
 
-            header("Location: menu.php");
+            $_SESSION['apellido'] = $fila['apellidos'];
+
+            $_SESSION['rol'] = $fila['rol'];
+
+            if($fila['rol'] == "administrador"){
+
+                    header("Location: admin/dashboard.php");
+
+                }else{
+
+                    header("Location: menu.php");
+
+                }
+
             exit();
 
         }else{
