@@ -191,6 +191,50 @@ body::before{
   }
 
 }
+
+.service-box{
+
+    display:none;
+
+    margin-top:12px;
+
+    animation:fadeIn .3s ease;
+
+}
+
+.service-box textarea{
+
+    width:100%;
+
+    min-height:90px;
+
+    resize:none;
+
+    border-radius:18px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    background:rgba(255,255,255,.05);
+
+    padding:18px;
+
+    color:white;
+
+    font-size:14px;
+
+    font-family:inherit;
+
+    transition:.25s;
+
+}
+
+.service-box textarea:focus{
+
+    border-color:#3b82f6;
+
+    box-shadow:0 0 0 4px rgba(59,130,246,.15);
+
+}
 /* =======================
    LOGOUT
 ======================= */

@@ -106,6 +106,8 @@ if(!isset($_SESSION['usuario'])){
                         class="service-form"
                     >
 
+                        <div class="service-item">
+
                         <label class="option">
 
                             <input
@@ -114,96 +116,94 @@ if(!isset($_SESSION['usuario'])){
                                 value="General"
                             >
 
-                            <span>
-                                General
-                            </span>
+                            <span>General</span>
 
                         </label>
+
+                        <div class="service-box">
+
+                            <textarea
+
+                                name="detalle_general"
+
+                                placeholder="Describe el mantenimiento general que necesitas..."
+
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+                       <div class="service-item">
 
                         <label class="option">
 
                             <input
                                 type="checkbox"
                                 name="servicio[]"
-                                value="Software"
+                                value="software"
                             >
 
-                            <span>
-                                Software
-                            </span>
+                            <span>Software</span>
 
                         </label>
+
+                        <div class="service-box">
+
+                            <textarea
+
+                                name="detalle_software"
+
+                                placeholder="¿Qué problema de software presenta el equipo?"
+
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+                       <div class="service-item">
 
                         <label class="option">
 
                             <input
                                 type="checkbox"
                                 name="servicio[]"
-                                value="Hardware"
+                                value="hardware"
                             >
 
-                            <span>
-                                Hardware
-                            </span>
+                            <span>Hardware</span>
 
                         </label>
+
+                        <div class="service-box">
+
+                            <textarea
+
+                                name="detalle_hardware"
+
+                                placeholder="¿Qué componente físico presenta fallas?"
+
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+                            <!-- OTROS -->
 
                         <label class="option">
 
                             <input
                                 type="checkbox"
-                                name="servicio[]"
-                                value="Cambio de pantalla"
+                                id="otrosCheck"
                             >
 
                             <span>
-                                Cambio de pantalla
+                                Otros
                             </span>
 
                         </label>
-
-                        <label class="option">
-
-                            <input
-                                type="checkbox"
-                                name="servicio[]"
-                                value="Cambio de batería"
-                            >
-
-                            <span>
-                                Cambio de batería
-                            </span>
-
-                        </label>
-
-                        <label class="option">
-
-                            <input
-                                type="checkbox"
-                                name="servicio[]"
-                                value="Daños de red"
-                            >
-
-                            <span>
-                                Daños de red
-                            </span>
-
-                        </label>
-
-                        <!-- OTROS -->
-
-<label class="option">
-
-    <input
-        type="checkbox"
-        id="otrosCheck"
-    >
-
-    <span>
-        Otros
-    </span>
-
-</label>
 
 <!-- DESCRIPCIÓN -->
 
@@ -327,6 +327,8 @@ document.addEventListener(
     "DOMContentLoaded",
     function(){
 
+
+
         const otrosCheck =
         document.getElementById(
             "otrosCheck"
@@ -367,6 +369,39 @@ document.addEventListener(
 
             }
         );
+
+            document
+            .querySelectorAll(".service-item")
+            .forEach(function(item){
+
+                const check =
+                item.querySelector(
+                    'input[type="checkbox"]'
+                );
+
+                const box =
+                item.querySelector(
+                    ".service-box"
+                );
+
+                check.addEventListener(
+                    "change",
+                    function(){
+
+                        if(this.checked){
+
+                            box.style.display="block";
+
+                        }else{
+
+                            box.style.display="none";
+
+                        }
+
+                    }
+                );
+
+            });
 
         /* VALIDAR SERVICIOS */
 
