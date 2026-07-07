@@ -2,12 +2,86 @@
 
 session_start();
 
+if(!isset($_SESSION["cantidad"])){
+
+    $_SESSION["cantidad"] = 1;
+
+}
+
+if(isset($_POST["accion"])){
+
+    if($_POST["accion"] == "sumar"){
+
+        $_SESSION["cantidad"]++;
+
+    }
+
+    if($_POST["accion"] == "restar"){
+
+        if($_SESSION["cantidad"] > 1){
+
+            $_SESSION["cantidad"]--;
+
+        }
+
+    }
+
+}
+
+if(isset($_POST["vaciar"])){
+
+    $_SESSION["cantidad"] = 1;
+
+    unset($_SESSION["descuento"]);
+
+}
+
 if(!isset($_SESSION['usuario'])){
 
     header("Location: inicio.php");
     exit();
 
 }
+
+$precio = 5645001;
+
+$subtotal = $precio * $_SESSION["cantidad"];
+
+$total = $subtotal;
+
+/*cupon de descuento*/
+
+$descuento = 0;
+
+if(isset($_POST["cupon"])){
+
+    $codigo = strtoupper(trim($_POST["cupon"]));
+
+    if($codigo == "CEL10"){
+
+        $descuento = 10;
+
+    }elseif($codigo == "CEL20"){
+
+        $descuento = 20;
+
+    }elseif($codigo == "CEL50"){
+
+        $descuento = 50;
+
+    }
+
+    $_SESSION["descuento"] = $descuento;
+
+}
+
+if(isset($_SESSION["descuento"])){
+
+    $descuento = $_SESSION["descuento"];
+
+}
+
+$total = $subtotal - ($subtotal * $descuento / 100);
 
 ?>
 <!doctype html>
@@ -184,26 +258,46 @@ if(!isset($_SESSION['usuario'])){
                                 $8.999.000
                             </span>
 
-                            <span class="new-price">
-                                $5.645.001
-                            </span>
+                           <strong>
+
+                                <?php echo "$" . number_format($precio,0,",","."); ?>
+
+                            </strong>
 
                         </div>
 
                         <!-- QUANTITY -->
                         <div class="quantity">
 
-                            <button>
-                                -
-                            </button>
+                            <form method="POST">
+
+                                <button
+                                    type="submit"
+                                    name="accion"
+                                    value="restar"
+                                >
+                                    -
+                                </button>
+
+                            </form>
 
                             <span>
-                                1
+
+                                <?php echo $_SESSION["cantidad"]; ?>
+
                             </span>
 
-                            <button>
-                                +
-                            </button>
+                            <form method="POST">
+
+                                <button
+                                    type="submit"
+                                    name="accion"
+                                    value="sumar"
+                                >
+                                    +
+                                </button>
+
+                            </form>
 
                         </div>
 
@@ -224,11 +318,33 @@ if(!isset($_SESSION['usuario'])){
                             Subtotal
                         </span>
 
-                        <strong>
-                            $5.645.001
+                       <strong>
+
+                        <?php echo "$" . number_format($subtotal,0,",","."); ?>
+
                         </strong>
 
                     </div>
+
+                    <?php if($descuento > 0){ ?>
+
+                        <div class="summary-line">
+
+                            <span>
+
+                                Descuento (<?php echo $descuento; ?>%)
+
+                            </span>
+
+                            <strong>
+
+                                -$<?php echo number_format($subtotal * $descuento / 100,0,",","."); ?>
+
+                            </strong>
+
+                        </div>
+
+                        <?php } ?>
 
                     <div class="summary-line">
 
@@ -248,25 +364,30 @@ if(!isset($_SESSION['usuario'])){
                             Total
                         </span>
 
-                        <strong>
-                            $5.645.001
+                       <strong>
+
+                        <?php echo "$" . number_format($total,0,",","."); ?>
+
                         </strong>
 
                     </div>
 
                     <!-- COUPON -->
-                    <div class="coupon-box">
+                   <form method="POST" class="coupon-box">
 
                         <input
                             type="text"
+                            name="cupon"
                             placeholder="Cupón de descuento"
                         >
 
-                        <button>
+                        <button type="submit">
+
                             Aplicar
+
                         </button>
 
-                    </div>
+                    </form>
 
                     <!-- BUTTONS -->
                 <button 
@@ -285,11 +406,19 @@ if(!isset($_SESSION['usuario'])){
                     Seguir comprando
                 </button>
 
+                    <form method="POST">
+
                     <button
+                        type="submit"
+                        name="vaciar"
                         class="empty-btn"
                     >
+
                         Vaciar carrito
+
                     </button>
+
+                </form>
 
                 </div>
 

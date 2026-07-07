@@ -199,6 +199,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 placeholder="ejemplo@gmail.com"
               />
 
+              <?php if($mensaje != ""){ ?>
+
+                  <div class="error-text">
+
+                      <?php echo $mensaje; ?>
+
+                  </div>
+
+              <?php } ?>
+
             </div>
 
             <label>
