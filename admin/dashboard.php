@@ -14,6 +14,37 @@ if(
 
 include("../db_conexion.php");
 
+/* TOTAL CLIENTES */
+$sql = "SELECT COUNT(*) AS total
+        FROM usuarios
+        WHERE rol='cliente'";
+
+$res = mysqli_query($conexion,$sql);
+$total_clientes = mysqli_fetch_assoc($res)['total'];
+
+/* TOTAL SERVICIOS */
+$sql = "SELECT COUNT(*) AS total
+        FROM agendamientos";
+
+$res = mysqli_query($conexion,$sql);
+$total_servicios = mysqli_fetch_assoc($res)['total'];
+
+/* PENDIENTES */
+$sql = "SELECT COUNT(*) AS total
+        FROM agendamientos
+        WHERE estado='Pendiente'";
+
+$res = mysqli_query($conexion,$sql);
+$total_pendientes = mysqli_fetch_assoc($res)['total'];
+
+/* LISTOS */
+$sql = "SELECT COUNT(*) AS total
+        FROM agendamientos
+        WHERE estado='Listo'";
+
+$res = mysqli_query($conexion,$sql);
+$total_listos = mysqli_fetch_assoc($res)['total'];
+
 // Pendientes
 $sql = "SELECT COUNT(*) AS total
         FROM agendamientos
@@ -71,6 +102,30 @@ include("includes/sidebar.php");
     </p>
 
     <div class="cards">
+
+    <div class="card">
+
+    <h3>Clientes</h3>
+
+    <span>
+
+        <?php echo $total_clientes; ?>
+
+    </span>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Servicios</h3>
+
+        <span>
+
+            <?php echo $total_servicios; ?>
+
+        </span>
+
+    </div>
 
     <div class="card">
 

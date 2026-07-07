@@ -36,18 +36,13 @@
 
         </a>
 
-        <a href="tecnicos.php">
+        <a href="quejas.php">
 
-            👨‍🔧 Técnicos
-
-        </a>
-
-        <a href="estadisticas.php">
-
-            📊 Estadísticas
+            � Quejas y PQR
 
         </a>
 
+       
         <a href="../logout.php">
 
             🚪 Cerrar sesión
