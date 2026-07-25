@@ -96,7 +96,7 @@ mysqli_query(
 );
 
     // --- INICIO ENVÍO DE CORREO ---
-    $apiKey = '';
+    $apiKey = "";
     $emailData = [
         'from' => 'onboarding@resend.dev',
         'to' => [$usuario], // Funcionará si $usuario es tu correo; si no, pon 'sebasrr0813@gmail.com' para probar
