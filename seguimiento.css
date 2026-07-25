@@ -453,21 +453,49 @@ h2{
 
 }
 
-.search-input{
+.codigo-select{
 
-    display:flex;
+    width:240px;
 
-    align-items:center;
+    height:64px;
 
-    border-radius:18px;
+    padding:0 22px;
 
-    overflow:hidden;
+    border:none;
 
-    background:rgba(255,255,255,.05);
+    border-right:1px solid rgba(255,255,255,.08);
 
-    border:1px solid rgba(255,255,255,.08);
+    outline:none;
+
+    background:linear-gradient(
+        180deg,
+        rgba(30,41,59,.95),
+        rgba(15,23,42,.95)
+    );
+
+    color:#f8fafc;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%2360a5fa' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.5l6.5 6 6.5-6' stroke='%2360a5fa' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+
+    background-repeat:no-repeat;
+
+    background-position:right 18px center;
+
+    padding-right:48px;
 
 }
+
 
 .search-input span{
 
@@ -489,27 +517,43 @@ h2{
 
     flex:1;
 
+    height:64px;
+
     border:none;
 
     outline:none;
 
-    background:none;
+    background:transparent;
 
-    color:white;
+    color:#ffffff;
 
-    font-size:20px;
+    font-size:32px;
 
-    padding:18px;
+    font-weight:700;
+
+    letter-spacing:3px;
+
+    padding:0 24px;
 
     text-transform:uppercase;
-
-    letter-spacing:2px;
 
 }
 
 .search-input input::placeholder{
 
     color:#64748b;
+
+    font-weight:500;
+
+}
+
+.codigo-select:hover{
+
+    background:linear-gradient(
+        180deg,
+        rgba(37,99,235,.20),
+        rgba(15,23,42,.95)
+    );
 
 }
 
@@ -548,5 +592,95 @@ h2{
     text-align:center;
 
     color:#f87171;
+
+}
+
+.codigo-select{
+
+    background:#111827;
+
+    color:white;
+
+    border:1px solid #334155;
+
+    border-radius:10px 0 0 10px;
+
+    padding:0 14px;
+
+    outline:none;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+}
+
+.codigo-select option{
+
+    background:#111827;
+
+    color:white;
+
+}
+
+.search-input{
+
+    display:flex;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    border-radius:18px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    background:rgba(15,23,42,.95);
+
+}
+
+/*========== PQR PENDIENTE ==========*/
+
+.pending-box{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:18px;
+
+    padding:22px;
+
+    border-radius:18px;
+
+    background:rgba(245,158,11,.10);
+
+    border:1px solid rgba(245,158,11,.30);
+
+}
+
+.pending-icon{
+
+    font-size:34px;
+
+}
+
+.pending-box strong{
+
+    display:block;
+
+    color:#fbbf24;
+
+    font-size:18px;
+
+    margin-bottom:8px;
+
+}
+
+.pending-box p{
+
+    color:#e2e8f0;
+
+    line-height:1.6;
 
 }

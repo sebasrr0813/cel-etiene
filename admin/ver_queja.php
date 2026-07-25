@@ -104,21 +104,104 @@ $fila = mysqli_fetch_assoc($resultado);
 
 </div>
 
-<br>
+        <form action="actualizar_pqr.php" method="POST">
 
-<a
-href="quejas.php"
-class="btn-editar"
->
+        <input
+        type="hidden"
+        name="id"
+        value="<?php echo $fila["id"]; ?>">
 
-Volver
+        <div class="info-box">
 
-</a>
+        <span>
 
-</main>
+        Estado actual
 
-<?php
+        </span>
 
-include("includes/footer.php");
+        <select
+        name="estado"
+        class="input-admin">
 
-?>
+        <option
+        value="Recibida"
+        <?php if($fila["estado"]=="Recibida") echo "selected"; ?>>
+        Recibida
+        </option>
+
+        <option
+        value="En revisión"
+        <?php if($fila["estado"]=="En revisión") echo "selected"; ?>>
+        En revisión
+        </option>
+
+        <option
+        value="En proceso"
+        <?php if($fila["estado"]=="En proceso") echo "selected"; ?>>
+        En proceso
+        </option>
+
+        <option
+        value="Resuelta"
+        <?php if($fila["estado"]=="Resuelta") echo "selected"; ?>>
+        Resuelta
+        </option>
+
+        <option
+        value="Cerrada"
+        <?php if($fila["estado"]=="Cerrada") echo "selected"; ?>>
+        Cerrada
+        </option>
+
+        </select>
+
+        </div>
+
+        <div class="info-box">
+
+        <span>
+
+        Observaciones del administrador
+
+        </span>
+
+        <textarea
+
+        name="observacion_admin"
+
+        class="input-admin"
+
+        rows="6"
+
+        placeholder="Escribe aquí las observaciones..."><?php echo $fila["observacion_admin"]; ?></textarea>
+
+        </div>
+
+        <button
+        type="submit"
+        class="btn-editar">
+
+        Guardar cambios
+
+        </button>
+
+        </form>
+
+        <br>
+
+        <a
+        href="quejas.php"
+        class="btn-editar"
+        >
+
+        Volver
+
+        </a>
+
+        </main>
+
+        <?php
+
+        include("includes/footer.php");
+
+        ?>

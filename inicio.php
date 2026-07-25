@@ -208,6 +208,14 @@ if(isset($_GET['error'])){
 
                         <?php endif; ?>
 
+                        <?php if($error == "bloqueado"): ?>
+
+                            <div class="error-text">
+                                Tu cuenta ha sido bloqueada. Contacta al administrador.
+                            </div>
+
+                        <?php endif; ?>
+
                         <!-- BUTTON -->
                         <button
                             type="submit"

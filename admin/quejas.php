@@ -79,17 +79,12 @@ $resultado = mysqli_query($conexion,$sql);
     <thead>
 
         <tr>
-
             <th>Código PQR</th>
-
             <th>Cliente</th>
-
             <th>Tipo</th>
-
+            <th>Estado</th>
             <th>Fecha</th>
-
             <th>Acción</th>
-
         </tr>
 
     </thead>
@@ -104,9 +99,47 @@ $resultado = mysqli_query($conexion,$sql);
 
             <td><?php echo $fila["nombre"]; ?></td>
 
-            <td><?php echo $fila["tipo"]; ?></td>
+           <td><?php echo $fila["tipo"]; ?></td>
 
-            <td><?php echo $fila["fecha_registro"]; ?></td>
+            <td>
+
+            <?php
+
+            switch($fila["estado"]){
+
+                case "Recibida":
+                    echo "<span class='estado pendiente'>🟡 Recibida</span>";
+                break;
+
+                case "En revisión":
+                    echo "<span class='estado diagnóstico'>🔵 En revisión</span>";
+                break;
+
+                case "En proceso":
+                    echo "<span class='estado en-reparación'>🟠 En proceso</span>";
+                break;
+
+                case "Resuelta":
+                    echo "<span class='estado listo'>🟢 Resuelta</span>";
+                break;
+
+                case "Cerrada":
+                    echo "<span class='estado bloqueado'>⚫ Cerrada</span>";
+                break;
+
+            }
+
+            ?>
+
+            </td>
+
+            <td>
+
+            <?php echo $fila["fecha_registro"]; ?>
+
+            </td>
+
+            
 
             <td>
 

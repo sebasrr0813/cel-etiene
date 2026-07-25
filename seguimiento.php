@@ -12,6 +12,8 @@ if(!isset($_SESSION['usuario'])){
 }
 /* VARIABLES */
 
+$tipo = "CEL";
+$numero = "";
 $codigo = "";
 
 $estado = "";
@@ -32,10 +34,36 @@ $mensaje = "";
 
 if(isset($_POST["buscar"])){
 
-    $codigo = "CEL-" . strtoupper(trim($_POST["codigo"]));
+    $tipo = $_POST["tipo_codigo"];
 
-    $sql = "SELECT * FROM agendamientos
-            WHERE codigo_soporte='$codigo'";
+    $numero = strtoupper(trim($_POST["codigo"]));
+
+    $codigo = $tipo . "-" . $numero;
+
+    switch($tipo){
+
+        case "CEL":
+
+            $sql = "SELECT * FROM agendamientos
+                    WHERE codigo_soporte='$codigo'";
+
+        break;
+
+        case "PQR":
+
+            $sql = "SELECT * FROM quejas
+                    WHERE codigo_pqr='$codigo'";
+
+        break;
+
+        case "ORD":
+
+            $sql = "SELECT * FROM compras
+                    WHERE codigo_compra='$codigo'";
+
+        break;
+
+    }
 
     $resultado = mysqli_query($conexion,$sql);
 
@@ -43,16 +71,79 @@ if(isset($_POST["buscar"])){
 
         $fila = mysqli_fetch_assoc($resultado);
 
-        $estado      = $fila["estado"];
-        $tecnico     = $fila["tecnico"];
+        if($tipo=="CEL"){
+
+        $estado = $fila["estado"];
+        $tecnico = $fila["tecnico"];
+        $servicios = $fila["servicios"];
         $descripcion = $fila["descripcion"];
-        $servicios   = $fila["servicios"];
-        $fecha       = $fila["fecha_visita"];
-        $hora        = $fila["hora_visita"];
+        $fecha = $fila["fecha_visita"];
+        $hora = $fila["hora_visita"];
+
+    }
+
 
     }else{
 
-        $mensaje = "Código de soporte no encontrado.";
+        $mensaje = "No se encontró el código ingresado.";
+
+    }
+
+}
+
+/*==================================================
+=            PANEL DERECHO                        =
+==================================================*/
+
+$panelTitulo1 = "Tiempo estimado";
+$panelValor1  = "2 días";
+
+$panelTitulo2 = "Prioridad";
+$panelValor2  = "Alta";
+
+if($tipo=="PQR" && isset($fila)){
+
+    $panelTitulo1 = "Estado";
+
+    $panelValor1 = $fila["estado"];
+
+    if(!empty($fila["fecha_actualizacion"])){
+
+        $panelTitulo2 = "Última actualización";
+
+        $panelValor2 = date(
+            "d/m/Y",
+            strtotime($fila["fecha_actualizacion"])
+        );
+
+    }else{
+
+        $panelTitulo2 = "Seguimiento";
+
+        $panelValor2 = "En proceso";
+
+    }
+
+}
+
+if($tipo=="ORD" && isset($fila)){
+
+    $panelTitulo1 = "Estado";
+
+    $panelValor1 = $fila["estado"];
+
+    $panelTitulo2 = "Entrega estimada";
+
+    if(empty($fila["fecha_estimada"])){
+
+        $panelValor2 = "Pendiente";
+
+    }else{
+
+        $panelValor2 = date(
+            "d/m/Y",
+            strtotime($fila["fecha_estimada"])
+        );
 
     }
 
@@ -275,281 +366,104 @@ switch($estado){
 
                 <!-- LEFT -->
 
-                <div class="tracking-card">
+                        <div class="tracking-card">
+                            
+            <div class="section-tag">
 
-                    <div class="section-tag">
+                SEGUIMIENTO
 
-                        SEGUIMIENTO TÉCNICO
+            </div>
 
-                    </div>
+            <h2>
 
-                    <h2>
+                Consulta tu seguimiento
 
-                        Estado de tu reparación
+            </h2>
 
-                    </h2>
+            <p class="subtitle">
 
-                    <p class="subtitle">
+                Ingresa el código para consultar el estado.
 
-                        Consulta el estado actual
-                        del mantenimiento de tu equipo.
+            </p>
 
-                    </p>
+            <form method="POST" class="search-form">
 
-                    <form method="POST" class="search-form">
+                <label>
 
-                    <label>
+                    Código de seguimiento
 
-                        Código de soporte
+                </label>
 
-                    </label>
+                <div class="search-input">
 
-                    <div class="search-input">
-
-                        <span>CEL-</span>
-
-                        <input
-                            type="text"
-                            name="codigo"
-                            maxlength="8"
-                            placeholder="1DDA6507"
-                            value="<?php echo str_replace("CEL-","",$codigo); ?>"
-                            required
-                        >
-
-                    </div>
-
-                    <button
-                        type="submit"
-                        name="buscar"
-                        class="search-btn"
+                    <select
+                        name="tipo_codigo"
+                        class="codigo-select"
                     >
 
-                        Buscar seguimiento
-
-                    </button>
-
-                </form>
-
-                        <?php
-
-                        if($mensaje != ""){
-
-                            echo "<p class='error-msg'>$mensaje</p>";
-
-                        }
-
-                        ?>
-
-                    <!-- INFO -->
-
-                    <?php if($codigo != "" && $mensaje == ""){ ?>
-
-                    <div class="info-grid">
-
-                        <div class="info-box">
-
-                            <span>
-
-                                Código soporte
-
-                            </span>
-
-                            <strong>
-
-                                <?php echo $codigo; ?>
-
-                            </strong>
-
-
-
-                        </div>
-
-                        <div class="info-box">
-
-                            <span>
-
-                                Equipo
-
-                            </span>
-
-                            <strong>
-
-                                <?php echo $servicios; ?>
-
-                            </strong>
-
-                        </div>
-
-                        <div class="info-box">
-
-                            <span>
-
-                                Técnico asignado
-
-                            </span>
-
-                            <strong>
-
-                                <?php echo $tecnico; ?>
-
-                            </strong>
-
-                        </div>
-
-                        <div class="info-box">
-
-                            <span>
-
-                                Estado actual
-
-                            </span>
-
-                            <strong class="status">
-
-                                <?php echo $estado; ?>
-
-                            </strong>
-
-                        </div>
-
-                        <div class="info-box">
-
-                            <span>
-
-                                Descripción
-
-                            </span>
-
-                            <strong>
-
-                                <?php echo $descripcion; ?>
-
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-                    
-
-                    <!-- PROGRESS -->
-
-                    <div class="progress-section">
-
-                        <div class="progress-header">
-
-                            <span>
-
-                                Progreso reparación
-
-                            </span>
-
-                            <strong>
-
-                                <?php echo $progreso; ?>%
-
-                            </strong>
-
-                        </div>
-
-                        <div class="progress-bar">
-
-                            <div
-                                class="progress-fill"
-                                style="width: <?php echo $progreso; ?>%;"
-                            ></div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- STEPS -->
-
-                    <div class="repair-steps">
-
-                        <div class="step <?php echo $paso1; ?>">
-
-                            <div class="circle"></div>
-
-                            <div class="step-text">
-
-                                Recepción del equipo
-
-                            </div>
-
-                        </div>
-
-                        <div class="step-line <?php echo $linea1; ?>"></div>
-
-                        <div class="step <?php echo $paso2; ?>">
-
-                            <div class="circle"></div>
-
-                            <div class="step-text">
-
-                                Diagnóstico técnico
-
-                            </div>
-
-                        </div>
-
-                        <div class="step-line <?php echo $linea2; ?>"></div>
-
-                        <div class="step <?php echo $paso3; ?>">
-
-                            <div class="circle"></div>
-
-                            <div class="step-text">
-
-                                Reparación en proceso
-
-                            </div>
-
-                        </div>
-
-                        <div class="step-line <?php echo $linea3; ?>"></div>
-
-                        <div class="step">
-
-                            <div class="circle"></div>
-
-                            <div class="step-text">
-
-                                Pruebas finales
-
-                            </div>
-
-                        </div>
-
-                        <div class="step-line <?php echo $linea4; ?>"></div>
-
-                        <div class="step <?php echo $paso5; ?>">
-
-                            <div class="circle"></div>
-
-                            <div class="step-text">
-
-                                Equipo listo
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- BUTTON -->
-
-                    <button
-                        class="back-btn"
-                        onclick="window.location.href='menu.php'"
+                        <option value="CEL" <?php echo ($tipo=="CEL")?"selected":""; ?>>CEL</option>
+                        <option value="PQR" <?php echo ($tipo=="PQR")?"selected":""; ?>>PQR</option>
+                        <option value="ORD" <?php echo ($tipo=="ORD")?"selected":""; ?>>ORD</option>
+
+                    </select>
+
+                    <input
+                        type="text"
+                        name="codigo"
+                        placeholder="F5A28BEC"
+                        value="<?php echo htmlspecialchars($numero); ?>"
+                        required
                     >
 
-                        Volver al menú
+                </div>
 
-                    </button>
+                <button
+                    class="search-btn"
+                    name="buscar"
+                >
 
-                    <?php } ?>
+                    Buscar seguimiento
+
+                </button>
+
+            </form>
+
+            <?php
+
+            if($mensaje!=""){
+
+                echo "<p class='error-msg'>$mensaje</p>";
+
+            }
+
+            switch($tipo){
+
+                case "CEL":
+
+                    include("includes/seguimiento_cel.php");
+
+                break;
+
+                case "PQR":
+
+                    include("includes/seguimiento_pqr.php");
+
+                break;
+
+                case "ORD":
+
+                    include("includes/seguimiento_ord.php");
+
+                break;
+
+                default:
+
+                    include("includes/seguimiento_cel.php");
+
+            }
+
+            ?>
+            
 
                 </div>
 
@@ -593,13 +507,14 @@ switch($estado){
 
                             <span>
 
-                                Tiempo estimado
+                                <?php echo $panelTitulo1; ?>
 
                             </span>
 
-                            <strong>
+                            <strong
+                            class="<?php echo ($tipo=="PQR") ? "status" : ""; ?>">
 
-                                2 días
+                                <?php echo $panelValor1; ?>
 
                             </strong>
 
@@ -609,13 +524,14 @@ switch($estado){
 
                             <span>
 
-                                Prioridad
+                                <?php echo $panelTitulo2; ?>
 
                             </span>
 
-                            <strong class="priority">
+                            <strong
+                            class="<?php echo ($tipo=="CEL") ? "priority" : ""; ?>">
 
-                                Alta
+                                <?php echo $panelValor2; ?>
 
                             </strong>
 

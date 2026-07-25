@@ -51,13 +51,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             )
         ){
 
-           $_SESSION['usuario'] = $fila['correo'];
+                        // Verificar si el usuario está bloqueado
+                if($fila['estado'] == "bloqueado"){
 
-            $_SESSION['nombre'] = $fila['nombres'];
+                    header("Location: inicio.php?error=bloqueado");
 
-            $_SESSION['apellido'] = $fila['apellidos'];
+                    exit();
 
-            $_SESSION['rol'] = $fila['rol'];
+                }
+
+                    $_SESSION['id'] = $fila['id'];
+
+                    $_SESSION['usuario'] = $fila['correo'];
+
+                    $_SESSION['nombre'] = $fila['nombres'];
+
+                    $_SESSION['apellido'] = $fila['apellidos'];
+
+                    $_SESSION['rol'] = $fila['rol'];
 
             if($fila['rol'] == "administrador"){
 

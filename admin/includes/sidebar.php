@@ -24,18 +24,19 @@
 
         </a>
 
-        <a href="agendamientos.php">
-
-            📋 Agendamientos
-
-        </a>
-
-        <a href="clientes.php">
+         <a href="clientes.php">
 
             👥 Clientes
 
         </a>
 
+        <a href="agendamientos.php">
+
+            📋 Soporte
+
+        </a>
+
+    
         <a href="quejas.php">
 
             � Quejas y PQR
