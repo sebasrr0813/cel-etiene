@@ -99,7 +99,7 @@ mysqli_query(
     $apiKey = "";
     $emailData = [
         'from' => 'onboarding@resend.dev',
-        'to' => [$usuario], // Funcionará si $usuario es tu correo; si no, pon 'sebasrr0813@gmail.com' para probar
+        'to' => [$usuario], 
         'subject' => '¡Visita Programada! Código: ' . $codigo,
         'html' => "<h1>Hola $nombre</h1>
                 <p>Tu servicio ha sido programado con éxito.</p>
