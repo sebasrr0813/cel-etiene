@@ -684,3 +684,153 @@ h2{
     line-height:1.6;
 
 }
+
+/*=========================================
+=       MIS SEGUIMIENTOS
+=========================================*/
+
+.mis-seguimientos{
+
+    margin-top:30px;
+
+}
+
+.mis-seguimientos h3{
+
+    color:#7fd8ff;
+    margin:30px 0 15px;
+    font-size:22px;
+
+}
+
+.tracking-item{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 22px;
+
+    margin-bottom:12px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    text-decoration:none;
+
+    transition:.25s;
+
+}
+
+.tracking-item:hover{
+
+    transform:translateY(-2px);
+
+    border-color:#5d8cff;
+
+    background:rgba(93,140,255,.08);
+
+}
+
+.tracking-item strong{
+
+    display:block;
+
+    color:#fff;
+
+    font-size:18px;
+
+    margin-bottom:5px;
+
+}
+
+.tracking-item span{
+
+    color:#9fb4c8;
+
+    font-size:14px;
+
+}
+
+/*=============================
+=     TARJETAS SEGUIMIENTO
+=============================*/
+
+.mis-seguimientos{
+    margin-top:35px;
+}
+
+.seccion-lista{
+    margin-bottom:35px;
+}
+
+.seccion-lista h3{
+    color:#78cfff;
+    margin-bottom:15px;
+    font-size:22px;
+}
+
+.tracking-item{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:18px;
+
+    padding:18px 22px;
+
+    margin-bottom:14px;
+
+    color:white;
+
+    text-decoration:none;
+
+    transition:.25s;
+}
+
+.tracking-item:hover{
+
+    transform:translateY(-3px);
+
+    border-color:#5d8cff;
+
+    box-shadow:0 0 18px rgba(93,140,255,.25);
+
+}
+
+.codigo{
+
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.estado{
+
+    font-size:14px;
+    color:#b8c8da;
+}
+
+.flecha{
+
+    font-size:22px;
+    color:#6ca8ff;
+}
+
+.selected-card{
+
+    border:2px solid #5d8cff !important;
+
+    background:rgba(93,140,255,.15);
+
+    box-shadow:0 0 25px rgba(93,140,255,.35);
+
+}

@@ -4,6 +4,8 @@ session_start();
 
 include("db_conexion.php");
 
+require_once "correo/mailer.php";
+
 /* SERVICIOS */
 
 $servicios =
@@ -95,28 +97,78 @@ mysqli_query(
     $sql
 );
 
-    // --- INICIO ENVÍO DE CORREO ---
-    $apiKey = "";
-    $emailData = [
-        'from' => 'onboarding@resend.dev',
-        'to' => [$usuario], 
-        'subject' => '¡Visita Programada! Código: ' . $codigo,
-        'html' => "<h1>Hola $nombre</h1>
-                <p>Tu servicio ha sido programado con éxito.</p>
-                <p><strong>Código de Soporte:</strong> $codigo</p>
-                <p><strong>Servicios:</strong> $servicios</p>
-                <p><strong>Fecha:</strong> $fecha a las $hora</p>
-                <p>Entrega este código al técnico cuando llegue.</p>"
-    ];
+$html = '
 
-    $ch = curl_init('https://api.resend.com/emails' );
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $apiKey, 'Content-Type: application/json']);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($emailData));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_exec($ch);
-    curl_close($ch);
-    // --- FIN ENVÍO DE CORREO ---
+<h2>Solicitud de soporte registrada</h2>
+
+<p>
+
+Hola <b>'.$nombre.'</b>,
+
+</p>
+
+<p>
+
+Tu solicitud fue registrada correctamente.
+
+</p>
+
+<hr>
+
+<b>Código de seguimiento:</b>
+
+<h2 style="color:#2563eb;">
+'.$codigo.'
+</h2>
+
+<b>Servicios:</b>
+
+'.$servicios.'
+
+<br><br>
+
+<b>Descripción:</b>
+
+'.$descripcion.'
+
+<br><br>
+
+<b>Fecha:</b>
+
+'.$fecha.'
+
+<br>
+
+<b>Hora:</b>
+
+'.$hora.'
+
+<br><br>
+
+<b>Estado inicial:</b>
+
+Pendiente
+
+<br><br>
+
+Guarda este código para consultar el estado de tu reparación.
+
+';
+
+$resultado = enviarCorreo(
+
+    $usuario,
+    $nombre,
+    "Solicitud de soporte registrada",
+    $html
+
+);
+
+if($resultado !== true){
+
+    error_log($resultado);
+
+}
 
 ?>
 <!doctype html>

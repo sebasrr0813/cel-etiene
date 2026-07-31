@@ -11,6 +11,8 @@ if(!isset($_SESSION['usuario'])){
 
 include("db_conexion.php");
 
+require_once "correo/mailer.php";
+
 $usuario =
     $_SESSION['usuario'];
 
@@ -79,7 +81,98 @@ INSERT INTO compras(
 )
 ";
 
-mysqli_query($conexion,$sql);
+if(mysqli_query($conexion,$sql)){
+
+    $html = '
+
+    <h2>¡Compra realizada correctamente!</h2>
+
+    <p>
+
+    Hola <b>'.$persona.'</b>,
+
+    </p>
+
+    <p>
+
+    Gracias por comprar en <b>Cel-etiene</b>.
+
+    </p>
+
+    <hr>
+
+    <b>Código de compra</b>
+
+    <h2 style="color:#2563eb;">
+
+    '.$codigo_compra.'
+
+    </h2>
+
+    <b>Producto:</b>
+
+    '.$producto.'
+
+    <br><br>
+
+    <b>Cantidad:</b>
+
+    '.$cantidad.'
+
+    <br><br>
+
+    <b>Total:</b>
+
+    '.$precio.'
+
+    <br><br>
+
+    <b>Método de pago:</b>
+
+    '.$metodo_pago.'
+
+    <br><br>
+
+    <b>Dirección de entrega:</b>
+
+    '.$direccion.'
+
+    <br>
+
+    '.$barrio.'
+
+    <br><br>
+
+    <b>Estado:</b>
+
+    Pedido recibido
+
+    <br><br>
+
+    Conserva este código para consultar el estado de tu compra.
+
+    ';
+
+    $resultado = enviarCorreo(
+
+        $usuario,
+        $persona,
+        "Compra realizada correctamente",
+        $html
+
+    );
+
+    if($resultado !== true){
+
+        error_log($resultado);
+
+    }
+
+}else{
+
+    echo mysqli_error($conexion);
+
+}
 
 ?>
 

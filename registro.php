@@ -5,6 +5,8 @@ ini_set('display_errors', 1);
 
 include("db_conexion.php");
 
+require_once "correo/mailer.php";
+
 $mensaje = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -66,16 +68,51 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         )";
 
-        if(mysqli_query($conexion, $sql)){
+                    if(mysqli_query($conexion, $sql)){
 
-            header("Location: registro_exitoso.php");
-            exit();
+                $html = '
 
-        }else{
+                <h2>¡Bienvenido a Cel-etiene!</h2>
 
-            echo mysqli_error($conexion);
+                <p>Hola <b>'.$nombres.' '.$apellidos.'</b>,</p>
 
-        }
+                <p>
+
+                Tu cuenta ha sido creada correctamente.
+
+                </p>
+
+                <p>
+
+                Ya puedes iniciar sesión y acceder a nuestros servicios.
+
+                </p>
+
+                <hr>
+
+                <b>Correo:</b> '.$correo.'<br>
+
+                <b>Teléfono:</b> '.$telefono.'
+
+                ';
+
+                enviarCorreo(
+
+                    $correo,
+                    $nombres,
+                    "Bienvenido a Cel-etiene",
+                    $html
+
+                );
+
+                header("Location: registro_exitoso.php");
+                exit();
+
+            }else{
+
+                echo mysqli_error($conexion);
+
+            }
     }
 }
 

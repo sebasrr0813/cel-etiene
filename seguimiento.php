@@ -12,9 +12,9 @@ if(!isset($_SESSION['usuario'])){
 }
 /* VARIABLES */
 
-$tipo = "CEL";
+$tipo = $_GET["tipo"] ?? "CEL";
+$codigo = $_GET["codigo"] ?? "";
 $numero = "";
-$codigo = "";
 
 $estado = "";
 
@@ -32,60 +32,53 @@ $hora = "";
 
 $mensaje = "";
 
-if(isset($_POST["buscar"])){
-
-    $tipo = $_POST["tipo_codigo"];
-
-    $numero = strtoupper(trim($_POST["codigo"]));
-
-    $codigo = $tipo . "-" . $numero;
+if($codigo!=""){
 
     switch($tipo){
 
         case "CEL":
 
-            $sql = "SELECT * FROM agendamientos
-                    WHERE codigo_soporte='$codigo'";
+            $sql="SELECT * FROM agendamientos
+                  WHERE codigo_soporte='$codigo'";
 
         break;
 
         case "PQR":
 
-            $sql = "SELECT * FROM quejas
-                    WHERE codigo_pqr='$codigo'";
+            $sql="SELECT * FROM quejas
+                  WHERE codigo_pqr='$codigo'";
 
         break;
 
         case "ORD":
 
-            $sql = "SELECT * FROM compras
-                    WHERE codigo_compra='$codigo'";
+            $sql="SELECT * FROM compras
+                  WHERE codigo_compra='$codigo'";
 
         break;
 
     }
 
-    $resultado = mysqli_query($conexion,$sql);
+    $resultado=mysqli_query($conexion,$sql);
 
     if(mysqli_num_rows($resultado)>0){
 
-        $fila = mysqli_fetch_assoc($resultado);
+        $fila=mysqli_fetch_assoc($resultado);
 
         if($tipo=="CEL"){
 
-        $estado = $fila["estado"];
-        $tecnico = $fila["tecnico"];
-        $servicios = $fila["servicios"];
-        $descripcion = $fila["descripcion"];
-        $fecha = $fila["fecha_visita"];
-        $hora = $fila["hora_visita"];
+            $estado=$fila["estado"];
+            $tecnico=$fila["tecnico"];
+            $servicios=$fila["servicios"];
+            $descripcion=$fila["descripcion"];
+            $fecha=$fila["fecha_visita"];
+            $hora=$fila["hora_visita"];
 
-    }
-
+        }
 
     }else{
 
-        $mensaje = "No se encontró el código ingresado.";
+        $mensaje="No se encontró el seguimiento.";
 
     }
 
@@ -264,6 +257,71 @@ switch($estado){
 
 }
 
+/*=========================================================
+=            LISTADOS DEL USUARIO                         =
+=========================================================*/
+
+$usuario = $_SESSION["usuario"];
+
+// Soportes
+$sqlSoportes = "SELECT codigo_soporte, estado
+                FROM agendamientos
+                WHERE usuario='$usuario'
+                ORDER BY fecha_registro DESC";
+
+$resSoportes = mysqli_query($conexion,$sqlSoportes);
+
+// Compras
+$sqlCompras = "SELECT codigo_compra, estado
+               FROM compras
+               WHERE usuario='$usuario'
+               ORDER BY fecha_compra DESC";
+
+$resCompras = mysqli_query($conexion,$sqlCompras);
+
+// PQR
+$sqlPqr = "SELECT codigo_pqr, estado
+           FROM quejas
+           WHERE usuario='$usuario'
+           ORDER BY fecha_registro DESC";
+
+$resPqr = mysqli_query($conexion,$sqlPqr);
+
+
+function colorEstado($estado){
+
+    switch($estado){
+
+        case "Listo":
+            return "#2ecc71";
+
+        case "Pendiente":
+            return "#f39c12";
+
+        case "Diagnóstico":
+            return "#3498db";
+
+        case "En reparación":
+            return "#e74c3c";
+
+        case "Pruebas":
+            return "#9b59b6";
+
+        case "Pedido recibido":
+            return "#27ae60";
+
+        case "En revisión":
+            return "#f39c12";
+
+        case "En proceso":
+            return "#3498db";
+
+        default:
+            return "#95a5a6";
+
+    }
+
+}
 ?>
 
 <!doctype html>
@@ -376,89 +434,175 @@ switch($estado){
 
             <h2>
 
-                Consulta tu seguimiento
+               Mis seguimientos
 
             </h2>
 
             <p class="subtitle">
 
-                Ingresa el código para consultar el estado.
+                Selecciona cualquiera de tus seguimientos para ver el detalle.
 
             </p>
 
-            <form method="POST" class="search-form">
+         <?php
 
-                <label>
+            if($mensaje!=""){
+                echo "<p class='error-msg'>$mensaje</p>";
+            }
+            ?>
 
-                    Código de seguimiento
+            <div class="mis-seguimientos">
 
-                </label>
+           <div class="seccion-lista">
 
-                <div class="search-input">
+            <h3>🔧 Soportes</h3>
 
-                    <select
-                        name="tipo_codigo"
-                        class="codigo-select"
-                    >
+            <?php while($row=mysqli_fetch_assoc($resSoportes)){ ?>
 
-                        <option value="CEL" <?php echo ($tipo=="CEL")?"selected":""; ?>>CEL</option>
-                        <option value="PQR" <?php echo ($tipo=="PQR")?"selected":""; ?>>PQR</option>
-                        <option value="ORD" <?php echo ($tipo=="ORD")?"selected":""; ?>>ORD</option>
+            <a
+            class="tracking-item <?php echo ($codigo==$row["codigo_soporte"]) ? "selected-card" : ""; ?>"
+            href="seguimiento.php?tipo=CEL&codigo=<?php echo $row["codigo_soporte"]; ?>">
 
-                    </select>
+            <div>
 
-                    <input
-                        type="text"
-                        name="codigo"
-                        placeholder="F5A28BEC"
-                        value="<?php echo htmlspecialchars($numero); ?>"
-                        required
-                    >
+            <div class="codigo">
+
+            <?php echo $row["codigo_soporte"]; ?>
+
+            </div>
+
+           <div
+                class="estado"
+                style="color:<?php echo colorEstado($row["estado"]); ?>;
+                font-weight:bold;">
+
+                <?php echo $row["estado"]; ?>
+
+            </div>
+
+            </div>
+
+            <div class="flecha">
+
+            ➜
+
+            </div>
+
+            </a>
+
+            <?php } ?>
+
+            </div>
+
+
+         <div class="seccion-lista">
+
+                <h3>📦 Compras</h3>
+
+                <?php while($row=mysqli_fetch_assoc($resCompras)){ ?>
+
+               <a
+                class="tracking-item <?php echo ($codigo==$row["codigo_compra"]) ? "selected-card" : ""; ?>"
+                href="seguimiento.php?tipo=ORD&codigo=<?php echo $row["codigo_compra"]; ?>">
+
+                <div>
+
+                <div class="codigo">
+
+                <?php echo $row["codigo_compra"]; ?>
 
                 </div>
 
-                <button
-                    class="search-btn"
-                    name="buscar"
-                >
+                <div class="estado">
 
-                    Buscar seguimiento
+                Estado:
+                <?php echo $row["estado"]; ?>
 
-                </button>
+                </div>
 
-            </form>
+                </div>
+
+                <div class="flecha">
+
+                ➜
+
+                </div>
+
+                </a>
+
+                <?php } ?>
+
+            </div>
+
+
+          <div class="seccion-lista">
+
+            <h3>📋 PQR</h3>
+
+                <?php while($row=mysqli_fetch_assoc($resPqr)){ ?>
+
+                <a
+                class="tracking-item <?php echo ($codigo==$row["codigo_pqr"]) ? "selected-card" : ""; ?>"
+                href="seguimiento.php?tipo=PQR&codigo=<?php echo $row["codigo_pqr"]; ?>">
+
+                <div>
+
+                <div class="codigo">
+
+                <?php echo $row["codigo_pqr"]; ?>
+
+                </div>
+
+                <div class="estado">
+
+                Estado:
+                <?php echo $row["estado"]; ?>
+
+                </div>
+
+                </div>
+
+                <div class="flecha">
+
+                ➜
+
+                </div>
+
+                </a>
+
+                <?php } ?>
+
+            </div>
+
+            </div>
+
+            <hr style="margin:40px 0;opacity:.2;">
 
             <?php
 
-            if($mensaje!=""){
+            if($codigo!=""){
 
-                echo "<p class='error-msg'>$mensaje</p>";
+                switch($tipo){
 
-            }
+                    case "CEL":
 
-            switch($tipo){
+                        include("includes/seguimiento_cel.php");
 
-                case "CEL":
+                    break;
 
-                    include("includes/seguimiento_cel.php");
+                    case "PQR":
 
-                break;
+                        include("includes/seguimiento_pqr.php");
 
-                case "PQR":
+                    break;
 
-                    include("includes/seguimiento_pqr.php");
+                    case "ORD":
 
-                break;
+                        include("includes/seguimiento_ord.php");
 
-                case "ORD":
+                    break;
 
-                    include("includes/seguimiento_ord.php");
-
-                break;
-
-                default:
-
-                    include("includes/seguimiento_cel.php");
+                }
 
             }
 

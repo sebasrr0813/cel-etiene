@@ -4,6 +4,8 @@ session_start();
 
 include("db_conexion.php");
 
+require_once "correo/mailer.php";
+
 if(!isset($_SESSION['usuario'])){
 
     header("Location: inicio.php");
@@ -62,10 +64,78 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     )";
 
-    mysqli_query($conexion, $sql);
+    if(mysqli_query($conexion, $sql)){
 
-    $mensaje =
-        'Tu solicitud fue enviada correctamente.';
+    $html = '
+
+    <h2>PQR registrada correctamente</h2>
+
+    <p>
+
+    Hola <b>'.$nombre.'</b>,
+
+    </p>
+
+    <p>
+
+    Hemos recibido tu solicitud y nuestro equipo la revisará lo antes posible.
+
+    </p>
+
+    <hr>
+
+    <b>Código PQR:</b>
+
+    <h2 style="color:#2563eb;">
+
+    '.$codigo.'
+
+    </h2>
+
+    <b>Tipo:</b>
+
+    '.$tipo.'
+
+    <br><br>
+
+    <b>Descripción:</b>
+
+    '.$descripcion.'
+
+    <br><br>
+
+    <b>Estado:</b>
+
+    Recibida
+
+    <br><br>
+
+    Conserva este código para consultar el estado de tu solicitud.
+
+    ';
+
+    $resultado = enviarCorreo(
+
+        $correo,
+        $nombre,
+        "PQR registrada correctamente",
+        $html
+
+    );
+
+    if($resultado !== true){
+
+        error_log($resultado);
+
+    }
+
+    $mensaje = 'Tu solicitud fue enviada correctamente.';
+
+}else{
+
+    echo mysqli_error($conexion);
+
+}
 
 }
 ?>

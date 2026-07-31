@@ -14,6 +14,8 @@ if(
 
 include("../db_conexion.php");
 
+require_once "../correo/mailer.php";
+
 $id = $_GET['id'];
 
 $sql = "SELECT * FROM agendamientos
@@ -31,23 +33,95 @@ if(isset($_POST["guardar"])){
 
     $comentario = trim($_POST["comentario"]);
 
-    $sql = "UPDATE agendamientos
+$sql = "UPDATE agendamientos
 
-    SET
+SET
 
-    estado='$estado',
+estado='$estado',
 
-    tecnico='$tecnico',
+tecnico='$tecnico',
 
-    comentario='$comentario'
+comentario='$comentario'
 
-    WHERE id='$id'";
+WHERE id='$id'";
 
-    mysqli_query($conexion,$sql);
+if(mysqli_query($conexion,$sql)){
 
-    header("Location: agendamientos.php");
+    // Obtener los datos actualizados del servicio
+    $consulta = "SELECT * FROM agendamientos WHERE id='$id'";
 
-    exit();
+    $resultado = mysqli_query($conexion,$consulta);
+
+    $datos = mysqli_fetch_assoc($resultado);
+
+    $html = '
+
+    <h2>Actualización de tu servicio técnico</h2>
+
+    <p>
+
+    Hola <b>'.$datos["nombre_cliente"].'</b>,
+
+    </p>
+
+    <p>
+
+    El estado de tu servicio ha sido actualizado.
+
+    </p>
+
+    <hr>
+
+    <b>Código de soporte:</b>
+
+    <h2 style="color:#2563eb;">
+
+    '.$datos["codigo_soporte"].'
+
+    </h2>
+
+    <b>Nuevo estado:</b>
+
+    '.$estado.'
+
+    <br><br>
+
+    <b>Técnico asignado:</b>
+
+    '.($tecnico != "" ? $tecnico : "Pendiente de asignación").'
+
+    <br><br>
+
+    <b>Comentario:</b>
+
+    '.($comentario != "" ? $comentario : "Sin comentarios").'
+
+    <br><br>
+
+    Gracias por confiar en Cel-etiene.
+
+    ';
+
+    $resultadoCorreo = enviarCorreo(
+
+        $datos["usuario"],
+        $datos["nombre_cliente"],
+        "Actualización de tu servicio",
+        $html
+
+    );
+
+    if($resultadoCorreo !== true){
+
+        error_log($resultadoCorreo);
+
+    }
+
+}
+
+header("Location: agendamientos.php");
+
+exit();
 
 }
 
