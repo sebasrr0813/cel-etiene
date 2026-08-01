@@ -30,6 +30,18 @@
 
         </a>
 
+        <a href="compras.php">
+
+            📦 Compras
+
+        </a>
+
+        <li>
+          <a href="tecnicos.php">
+           👨‍🔧 Técnicos
+         </a>
+        </li>
+
         <a href="agendamientos.php">
 
             📋 Soporte

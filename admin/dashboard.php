@@ -29,6 +29,13 @@ $sql = "SELECT COUNT(*) AS total
 $res = mysqli_query($conexion,$sql);
 $total_servicios = mysqli_fetch_assoc($res)['total'];
 
+/* TOTAL COMPRAS */
+$sql = "SELECT COUNT(*) AS total
+        FROM compras";
+
+$res = mysqli_query($conexion,$sql);
+$total_compras = mysqli_fetch_assoc($res)['total'];
+
 /* PENDIENTES */
 $sql = "SELECT COUNT(*) AS total
         FROM agendamientos
@@ -126,6 +133,40 @@ include("includes/sidebar.php");
         </span>
 
     </div>
+
+    <div class="card">
+
+        <h3>Compras</h3>
+
+    <span>
+
+        <?php echo $total_compras; ?>
+
+    </span>
+
+    </div>
+
+  <div class="card">
+
+    <h3>Técnicos</h3>
+
+    <span>
+
+    <?php
+
+    $sql = "SELECT COUNT(*) AS total FROM tecnicos";
+
+    $r = mysqli_query($conexion, $sql);
+
+    $f = mysqli_fetch_assoc($r);
+
+    echo $f["total"];
+
+    ?>
+
+    </span>
+
+</div>
 
     <div class="card">
 
