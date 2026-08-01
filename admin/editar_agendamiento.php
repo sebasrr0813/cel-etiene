@@ -23,13 +23,44 @@ $sql = "SELECT * FROM agendamientos
 
 $resultado = mysqli_query($conexion,$sql);
 
+$sqlTecnicos = "SELECT id, nombre, apellido, especialidad
+                FROM tecnicos
+                WHERE estado='Disponible'
+                ORDER BY nombre ASC";
+
+$resultadoTecnicos = mysqli_query($conexion,$sqlTecnicos);
+
 $fila = mysqli_fetch_assoc($resultado);
 
 if(isset($_POST["guardar"])){
 
     $estado = $_POST["estado"];
 
-    $tecnico = trim($_POST["tecnico"]);
+    $tecnico_id = !empty($_POST["tecnico_id"])
+    ? (int)$_POST["tecnico_id"]
+    : NULL;
+
+    $tecnico = "";
+
+if($tecnico_id){
+
+    $consultaTecnico = mysqli_query(
+
+        $conexion,
+
+        "SELECT nombre, apellido
+         FROM tecnicos
+         WHERE id=$tecnico_id"
+
+    );
+
+    if($t = mysqli_fetch_assoc($consultaTecnico)){
+
+        $tecnico = $t["nombre"]." ".$t["apellido"];
+
+    }
+
+}
 
     $comentario = trim($_POST["comentario"]);
 
@@ -40,6 +71,8 @@ SET
 estado='$estado',
 
 tecnico='$tecnico',
+
+tecnico_id=".($tecnico_id ? $tecnico_id : "NULL").",
 
 comentario='$comentario'
 
@@ -250,23 +283,42 @@ Listo
 
 </select>
 
-<label>
+<label>Técnico</label>
 
-Técnico
-
-</label>
-
-<input
-
-type="text"
-
-name="tecnico"
-
+<select
+name="tecnico_id"
 class="input-admin"
-
-value="<?php echo $fila["tecnico"]; ?>"
-
 >
+
+    <option value="">-- Seleccione un técnico --</option>
+
+    <?php while($tec = mysqli_fetch_assoc($resultadoTecnicos)){ ?>
+
+        <option
+            value="<?php echo $tec["id"]; ?>"
+            <?php if($fila["tecnico_id"] == $tec["id"]) echo "selected"; ?>
+        >
+
+            <?php
+
+            echo htmlspecialchars(
+                $tec["nombre"]." ".
+                $tec["apellido"]
+            );
+
+            if(!empty($tec["especialidad"])){
+
+                echo " - ".$tec["especialidad"];
+
+            }
+
+            ?>
+
+        </option>
+
+    <?php } ?>
+
+</select>
 
 <label>
 

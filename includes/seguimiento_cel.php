@@ -36,22 +36,7 @@
 
                         </div>
 
-                        <div class="info-box">
-
-                            <span>
-
-                                Técnico asignado
-
-                            </span>
-
-                            <strong>
-
-                                <?php echo $tecnico; ?>
-
-                            </strong>
-
-                        </div>
-
+                       
                         <div class="info-box">
 
                             <span>
@@ -85,6 +70,110 @@
                         </div>
 
                     </div>
+
+                <?php if(!empty($fila["tecnico_nombre"])){ ?>
+
+                  <div class="tecnico-card">
+
+    <div class="tecnico-header">
+
+        <h3>
+
+            Técnico asignado
+
+        </h3>
+
+        <span class="estado-tecnico">
+
+            <?php echo htmlspecialchars($fila["estado_tecnico"]); ?>
+
+        </span>
+
+    </div>
+
+    <div class="tecnico-contenido">
+
+        <div class="tecnico-foto">
+
+            <?php if(!empty($fila["foto"])){ ?>
+
+                <img
+                src="uploads/tecnicos/<?php echo htmlspecialchars($fila["foto"]); ?>"
+                alt="Técnico">
+
+            <?php }else{ ?>
+
+                <img
+                src="img/user.png"
+                alt="Técnico">
+
+            <?php } ?>
+
+        </div>
+
+        <div class="tecnico-info">
+
+            <h3>
+
+                <?php
+
+                echo htmlspecialchars(
+
+                    $fila["tecnico_nombre"]." ".$fila["apellido"]
+
+                );
+
+                ?>
+
+            </h3>
+
+            <p>
+
+                <strong>Cargo:</strong>
+
+                <?php echo htmlspecialchars($fila["cargo"]); ?>
+
+            </p>
+
+            <p>
+
+                <strong>Especialidad:</strong>
+
+                <?php
+
+                echo !empty($fila["especialidad"])
+
+                ? htmlspecialchars($fila["especialidad"])
+
+                : "Sin especialidad";
+
+                ?>
+
+            </p>
+
+            <p>
+
+                <strong>Experiencia:</strong>
+
+                <?php echo htmlspecialchars($fila["experiencia"]); ?>
+
+            </p>
+
+            <p>
+
+                <?php echo htmlspecialchars($fila["descripcion"]); ?>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+                        <?php } ?>
+
+                        <!-- PROGRESS -->
 
                     
 

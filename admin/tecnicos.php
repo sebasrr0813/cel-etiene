@@ -88,145 +88,133 @@ if(isset($_GET["error"])){
 
 <div style="margin:20px 0;">
 
-    <a href="agregar_tecnico.php">
+    <a href="agregar_tecnico.php" class="btn btn-primary">
 
-        <button type="button">
+         <i class="fa-solid fa-plus"></i>
 
-            ➕ Nuevo técnico
-
-        </button>
+         Nuevo técnico
 
     </a>
 
 </div>
 
-<table>
-
-    <thead>
-
-        <tr>
-
-            <th>Foto</th>
-
-            <th>Nombre</th>
-
-            <th>Especialidad</th>
-
-            <th>Estado</th>
-
-            <th>Acciones</th>
-
-        </tr>
-
-    </thead>
-
-    <tbody>
+<div class="tecnicos-grid">
 
 <?php
 
-while($fila = mysqli_fetch_assoc($resultado)){
+while($fila=mysqli_fetch_assoc($resultado)){
 
 ?>
 
-<tr>
+    <div class="tecnico-card">
 
-<td>
+    <?php if(!empty($fila["foto"])){ ?>
+
+        <img
+        src="../uploads/tecnicos/<?php echo htmlspecialchars($fila["foto"]); ?>"
+        class="avatar-grande">
+
+    <?php } else { ?>
+
+        <img
+        src="../img/user.png"
+        class="avatar-grande">
+
+    <?php } ?>
+
+    <h3>
+
+        <?php
+        echo htmlspecialchars(
+        $fila["nombre"]." ".$fila["apellido"]);
+        ?>
+
+    </h3>
+
+    <p class="cargo">
+
+        <?php
+
+        echo !empty($fila["cargo"])
+            ? htmlspecialchars($fila["cargo"])
+            : "Técnico";
+
+        ?>
+
+    </p>
+
+    <p class="especialidad">
+
+        <i class="fa-solid fa-microchip"></i>
+
+        <?php
+
+        echo !empty($fila["especialidad"])
+        ? htmlspecialchars($fila["especialidad"])
+        : "Sin especialidad";
+
+        ?>
+
+    </p>
+
+    <div style="margin:18px 0;">
 
 <?php
 
-if(!empty($fila["foto"])){
+switch($fila["estado"]){
+
+case "Disponible":
+
+echo '<span class="badge badge-success">Disponible</span>';
+
+break;
+
+case "En servicio":
+
+echo '<span class="badge badge-warning">En servicio</span>';
+
+break;
+
+default:
+
+echo '<span class="badge badge-danger">'.$fila["estado"].'</span>';
+
+}
 
 ?>
 
-<img
-src="../uploads/tecnicos/<?php echo htmlspecialchars($fila["foto"]); ?>"
-width="60"
-height="60"
-style="border-radius:50%; object-fit:cover;">
+    </div>
 
-<?php
+    <div class="acciones-card">
 
-}else{
+        <a
+        href="ver_tecnico.php?id=<?php echo $fila["id"]; ?>"
+        class="btn btn-primary">
 
-?>
+        <i class="fa-solid fa-eye"></i>
 
-<img
-src="../img/user.png"
-width="60"
-height="60"
-style="border-radius:50%;">
+        </a>
 
-<?php } ?>
+        <a
+        href="editar_tecnico.php?id=<?php echo $fila["id"]; ?>"
+        class="btn btn-warning">
 
-</td>
+        <i class="fa-solid fa-pen"></i>
 
-<td>
+        </a>
 
-<?php
+        <a
+        href="eliminar_tecnico.php?id=<?php echo $fila["id"]; ?>"
+        class="btn btn-danger"
+        onclick="return confirm('¿Eliminar este técnico?');">
 
-echo htmlspecialchars($fila["nombre"]." ".$fila["apellido"]);
+        <i class="fa-solid fa-trash"></i>
 
-?>
+        </a>
 
-</td>
+    </div>
 
-<td>
-
-<?php
-
-echo htmlspecialchars($fila["especialidad"]);
-
-?>
-
-</td>
-
-<td>
-
-<?php
-
-echo htmlspecialchars($fila["estado"]);
-
-?>
-
-</td>
-
-<td>
-
-<a href="ver_tecnico.php?id=<?php echo $fila["id"]; ?>">
-
-<button type="button">
-
-👁 Ver
-
-</button>
-
-</a>
-
-<a href="editar_tecnico.php?id=<?php echo $fila["id"]; ?>">
-
-<button type="button">
-
-✏ Editar
-
-</button>
-
-</a>
-
-<a
-href="eliminar_tecnico.php?id=<?php echo $fila["id"]; ?>"
-onclick="return confirm('¿Eliminar este técnico?');">
-
-<button type="button">
-
-🗑 Eliminar
-
-</button>
-
-</a>
-
-</td>
-
-</tr>
+</div>
 
 <?php
 
@@ -234,9 +222,7 @@ onclick="return confirm('¿Eliminar este técnico?');">
 
 ?>
 
-</tbody>
-
-</table>
+</div>
 
 </main>
 

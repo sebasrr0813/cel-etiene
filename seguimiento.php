@@ -38,8 +38,30 @@ if($codigo!=""){
 
         case "CEL":
 
-            $sql="SELECT * FROM agendamientos
-                  WHERE codigo_soporte='$codigo'";
+            $sql = "
+
+           SELECT
+
+            agendamientos.*,
+
+            tecnicos.nombre AS tecnico_nombre,
+            tecnicos.apellido,
+            tecnicos.foto,
+            tecnicos.especialidad,
+            tecnicos.cargo,
+            tecnicos.experiencia,
+            tecnicos.descripcion,
+            tecnicos.estado AS estado_tecnico
+
+            FROM agendamientos
+
+            LEFT JOIN tecnicos
+
+            ON agendamientos.tecnico_id = tecnicos.id
+
+            WHERE codigo_soporte='$codigo'
+
+            ";
 
         break;
 
